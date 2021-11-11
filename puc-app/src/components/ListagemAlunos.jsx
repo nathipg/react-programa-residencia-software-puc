@@ -1,15 +1,9 @@
+import Card from './UI/Card';
 import Aluno from './Aluno';
 
 import './ListagemAlunos.css';
-import Card from './UI/Card';
 
-const ListagemAlunos = () => {
-  const alunos = [
-    {nome: 'Pissuti', idade: 24, telefone: '(19) 99999-9991'},
-    {nome: 'Cauê', idade: 24, telefone: '(19) 99999-9992'},
-    {nome: 'Joana', idade: 3, telefone: '(19) 99999-9993'},
-  ];
-
+const ListagemAlunos = ({alunos}) => {
   return (
     <Card>
       <h1>Listagem Alunos</h1>
