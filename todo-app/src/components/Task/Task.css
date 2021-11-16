@@ -1,10 +1,12 @@
 .Task {
+  align-items: center;
   border: 2px solid black;
   border-radius: 0.25rem;
-  padding: 0.5rem 1rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  width: 80%;
 }
 
 .Task__text {

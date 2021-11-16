@@ -1,10 +1,10 @@
 import './Task.css';
 
-const Task = ({text}) => {
+const Task = ({task, onCompleteTask}) => {
   return (
     <div className="Task">
-      <p className="Task__text">{text}</p>
-      <button className="Task__button"></button>
+      <p className="Task__text">{task.text}</p>
+      <button className="Task__button" onClick={() => onCompleteTask(task)}></button>
     </div>
   );
 };
