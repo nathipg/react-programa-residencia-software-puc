@@ -1,0 +1,33 @@
+.Task {
+  border: 2px solid black;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Task__text {
+  margin: 0;
+}
+
+.Task__button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.Task__button::after {
+  border-bottom: 7px solid #DC143C;
+  border-right: 7px solid #DC143C;
+  content: '';
+  display: inline-block;
+  height: 12px;
+  transform: rotate(45deg);
+  width: 6px;
+}
+
+.Task__button:hover::after {
+  border-bottom-color: #c7092f;
+  border-right-color: #c7092f;
+}

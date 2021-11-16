@@ -1,0 +1,20 @@
+.UserIcon {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.UserIcon__icon {
+  align-items: center;
+  border: 2px solid black;
+  border-radius: 0.25rem;
+  color: #DC143C;
+  display: flex;
+  height: 3rem;
+  justify-content: center;
+  width: 3rem;
+}
+
+.UserIcon__name {
+  font-size: 0.9rem;
+}
