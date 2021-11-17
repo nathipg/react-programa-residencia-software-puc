@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Button, Container} from 'react-bootstrap';
+import {Container} from 'react-bootstrap';
 
 import Header from './Header';
 import CadastroAluno from './components/CadastroAluno';
@@ -22,7 +22,6 @@ const App = () => {
 
   return (
     <Container>
-      <Button>Submit</Button>
       <Header />
       <CadastroAluno onCadastroAluno={cadastrarAluno} />
       <ListagemAlunos alunos={alunos} />
