@@ -1,5 +1,6 @@
-import Card from './UI/Card';
 import Aluno from './Aluno';
+
+import { Table } from 'react-bootstrap';
 
 import './ListagemAlunos.css';
 
@@ -7,13 +8,13 @@ const ListagemAlunos = ({alunos}) => {
   let alunosJsx = <tr><td colSpan="3">Nenhum aluno encontrado</td></tr>;
 
   if(alunos.length > 0) {
-    alunosJsx = alunos.map((aluno, i) => <Aluno key={i} nome={aluno.nome} idade={aluno.idade} telefone={aluno.telefone} />);
+    alunosJsx = alunos.map((aluno, i) => <Aluno key={i} aluno={aluno} />);
   }
 
   return (
-    <Card>
+    <div>
       <h1>Listagem Alunos</h1>
-      <table>
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>Nome</th>
@@ -24,8 +25,8 @@ const ListagemAlunos = ({alunos}) => {
         <tbody>
           {alunosJsx}
         </tbody>
-      </table>
-    </Card>
+      </Table>
+    </div>
   );
 }
 

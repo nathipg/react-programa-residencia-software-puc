@@ -1,9 +1,19 @@
-const Aluno = ({nome, idade, telefone}) => {
+import { useHistory } from 'react-router-dom';
+
+import './Aluno.css';
+
+const Aluno = ({aluno}) => {
+  const history = useHistory();
+
+  const clickHandler = () => {
+    history.push(`/alunos/${aluno._id}`);
+  };
+
   return (
-    <tr>
-      <td>{nome}</td>
-      <td>{idade}</td>
-      <td>{telefone}</td>
+    <tr className="aluno_row" onClick={clickHandler}>
+      <td>{aluno.nome}</td>
+      <td>{aluno.idade}</td>
+      <td>{aluno.telefone}</td>
     </tr>
   );
 }
