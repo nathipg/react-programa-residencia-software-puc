@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Button } from 'react-bootstrap';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Header from './components/Header';
@@ -11,20 +11,40 @@ import DetalhesAlunos from './components/DetalhesAlunos';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
-  const demoData = [
-    {_id: '1', nome: 'Pissuti', idade: 24, telefone: '(19) 99999-9991'},
-    {_id: '2', nome: 'Cauê', idade: 24, telefone: '(19) 99999-9992'},
-    {_id: '3', nome: 'Joana', idade: 3, telefone: '(19) 99999-9993'},
-  ];
+  const demoData = [];
   const [alunos, setAlunos] = useState(demoData);
 
-  const cadastrarAluno = aluno => {
-    setAlunos(prevState => [aluno, ...prevState]);
+  const cadastrarAluno = async (aluno) => {
+    const response = await fetch('http://localhost:3001/alunos', {
+      method: 'POST',
+      body: JSON.stringify(aluno),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const data = await response.json();
+    console.log(data);
+  };
+
+  const fetchAlunosHandler = () => {
+    fetch('http://localhost:3001/alunos', {
+      method: 'GET',
+    }).then(res => {
+      if(!res.ok)
+        throw new Error('Response not ok');
+
+      return res.json();
+    }).then(data => {
+      setAlunos(data);
+    })
+    .catch(err => console.log(err));
   };
 
   return (
     <Container>
       <Header />
+      <Button onClick={fetchAlunosHandler}>Buscar alunos</Button>
       <Switch>
         <Route path="/" exact>
           <HomePage />

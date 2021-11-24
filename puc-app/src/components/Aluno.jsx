@@ -6,7 +6,7 @@ const Aluno = ({aluno}) => {
   const history = useHistory();
 
   const clickHandler = () => {
-    history.push(`/alunos/${aluno._id}`);
+    history.push(`/alunos/${aluno.id}`);
   };
 
   return (
