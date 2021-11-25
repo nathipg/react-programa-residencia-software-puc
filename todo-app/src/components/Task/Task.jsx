@@ -1,10 +1,20 @@
+import { useNavigate } from 'react-router-dom';
+
 import './Task.css';
 
-const Task = ({task, onCompleteTask}) => {
+const Task = ({task, completeTaskHandler}) => {
+  const navigate = useNavigate();
+
+  const clickHandler = event => {
+    if(!event.target.classList.contains('Task__button')) {
+      navigate(`/task/${task.id}`);
+    }
+  };
+
   return (
-    <div className="Task">
-      <p className="Task__text">{task.text}</p>
-      <button className="Task__button" onClick={() => onCompleteTask(task)}></button>
+    <div className="Task" onClick={clickHandler}>
+      <p className="Task__text">{task.title}</p>
+      <button className="Task__button" onClick={() => completeTaskHandler(task)}></button>
     </div>
   );
 };

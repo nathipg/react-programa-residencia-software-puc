@@ -2,7 +2,7 @@ import Task from '../Task/Task';
 
 import './TaskList.css';
 
-const TaskList = ({tasks, onCompleteTask}) => {
+const TaskList = ({tasks, completeTaskHandler}) => {
   const renderNoTasks = () => {
     return (
       <p>Nothing to do today, have fun!</p>
@@ -13,7 +13,7 @@ const TaskList = ({tasks, onCompleteTask}) => {
       {
         tasks.length === 0 ?
         renderNoTasks()
-        : tasks.map((task, i) => <Task key={i} task={task} onCompleteTask={onCompleteTask} />)}
+        : tasks.map((task, i) => <Task key={i} task={task} completeTaskHandler={completeTaskHandler} />)}
     </div>
   );
 };

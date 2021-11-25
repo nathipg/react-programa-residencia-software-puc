@@ -1,0 +1,25 @@
+.TaskDetails {
+  padding: 2rem 12.5%;
+  gap: 1rem;
+}
+
+.TaskDetails > button {
+  float: left;
+}
+
+.TaskDetails .info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  margin: 0 auto;
+  width: 80%;
+}
+
+.TaskDetails .info h1 {
+  margin: 0;
+}
+
+.TaskDetails__actions {
+  align-self: center;
+}

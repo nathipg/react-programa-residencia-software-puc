@@ -1,0 +1,9 @@
+.TextArea {
+  min-height: 4rem;
+  padding: 0.25rem 0.5rem;
+  resize: vertical;
+  width: 100%;
+  width: -moz-available;
+  width: -webkit-fill-available;
+  width: fill-available;
+}

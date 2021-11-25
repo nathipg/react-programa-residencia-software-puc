@@ -1,0 +1,28 @@
+.Button {
+  border-radius: 0.25rem;
+  cursor: pointer;
+  margin: 0 0.5rem;
+  white-space: nowrap;
+}
+
+.Button.primary {
+  background: var(--red);
+  border: none;
+  color: white;
+  padding: 0.32rem 0.62rem;
+}
+
+.Button.primary:hover {
+  background-color: var(--dark-red);
+}
+
+.Button.secondary {
+  border: 2px solid var(--red);
+  background-color: white;
+  color: var(--red);
+  padding: 0.25rem 0.5rem;
+}
+
+.Button.secondary:hover {
+  background-color: var(--light-red);
+}

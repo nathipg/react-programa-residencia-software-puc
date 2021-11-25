@@ -1,0 +1,22 @@
+.Input {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  width: -moz-available;
+  width: -webkit-fill-available;
+  width: fill-available;
+}
+
+.Input input {
+  padding: 0.25rem 0.5rem;
+  width: 100%;
+  width: -moz-available;
+  width: -webkit-fill-available;
+  width: fill-available;
+}
+
+.Input .error {
+  align-self: flex-end;
+  color: var(--red);
+  font-size: 0.8rem;
+}
