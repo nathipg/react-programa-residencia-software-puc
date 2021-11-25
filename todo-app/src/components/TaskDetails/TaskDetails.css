@@ -22,4 +22,5 @@
 
 .TaskDetails__actions {
   align-self: center;
+  display: flex;
 }
