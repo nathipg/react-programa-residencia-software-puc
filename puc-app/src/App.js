@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Container, Button } from 'react-bootstrap';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
@@ -13,6 +13,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const App = () => {
   const demoData = [];
   const [alunos, setAlunos] = useState(demoData);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const cadastrarAluno = async (aluno) => {
     const response = await fetch('http://localhost:3001/alunos', {
@@ -27,41 +29,51 @@ const App = () => {
     console.log(data);
   };
 
-  const fetchAlunosHandler = () => {
-    fetch('http://localhost:3001/alunos', {
-      method: 'GET',
-    }).then(res => {
-      if(!res.ok)
-        throw new Error('Response not ok');
+  const fetchAlunosHandler = useCallback(async () => {
+    try {
+      const res = await fetch('http://localhost:3001/alunos', {
+        method: 'GET',
+      });
+      const listaAlunos = await res.json();
+      setAlunos(listaAlunos);
+      setIsLoading(false);
+      setError(false);
+    } catch (err) {
+      console.error(err);
+      setIsLoading(false);
+      setError(true);
+    }
+  }, []);
 
-      return res.json();
-    }).then(data => {
-      setAlunos(data);
-    })
-    .catch(err => console.log(err));
-  };
+  useEffect(() => {
+    fetchAlunosHandler();
+  }, [fetchAlunosHandler])
 
   return (
     <Container>
       <Header />
       <Button onClick={fetchAlunosHandler}>Buscar alunos</Button>
-      <Switch>
-        <Route path="/" exact>
-          <HomePage />
-        </Route>
-        <Route path="/alunos" exact>
-          <ListagemAlunos alunos={alunos} />
-        </Route>
-        <Route path="/alunos/:id">
-          <DetalhesAlunos alunos={alunos} />
-        </Route>
-        <Route path="/cadastro">
-          <CadastroAluno onCadastroAluno={cadastrarAluno} />
-        </Route>
-        <Route path="*">
-          <Redirect to="/alunos" />
-        </Route>
-      </Switch>
+      {isLoading && <p>Loading...</p>}
+      {!isLoading && error && <p>Algo deu errado</p>}
+      {!isLoading && !error && (
+        <Switch>
+          <Route path="/" exact>
+            <HomePage />
+          </Route>
+          <Route path="/alunos" exact>
+            <ListagemAlunos alunos={alunos} />
+          </Route>
+          <Route path="/alunos/:id">
+            <DetalhesAlunos alunos={alunos} />
+          </Route>
+          <Route path="/cadastro">
+            <CadastroAluno onCadastroAluno={cadastrarAluno} />
+          </Route>
+          <Route path="*">
+            <Redirect to="/alunos" />
+          </Route>
+        </Switch>
+      )}
     </Container>
   );
 };
