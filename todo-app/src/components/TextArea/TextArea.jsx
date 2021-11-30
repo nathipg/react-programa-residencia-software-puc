@@ -8,7 +8,7 @@ const TextArea = ({name, placeholder, value, changeHandler, readOnly}) => {
       className="TextArea"
       value={value}
       onChange={changeHandler}
-      readOnly={readOnly}></textarea>
+      readOnly={readOnly} />
   );
 };
 

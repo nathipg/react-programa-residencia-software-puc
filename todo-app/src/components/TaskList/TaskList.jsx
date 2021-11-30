@@ -3,17 +3,17 @@ import Task from '../Task/Task';
 import './TaskList.css';
 
 const TaskList = ({tasks, completeTaskHandler}) => {
-  const renderNoTasks = () => {
+  const renderTasks = () => {
+    const tasksPending = tasks.filter(task => !task.done);
     return (
-      <p>Nothing to do today, have fun!</p>
+      tasksPending.length === 0 ?
+        <p>Nothing to do today, have fun!</p>
+        : tasks.map((task, i) => !task.done && <Task key={i} task={task} completeTaskHandler={completeTaskHandler} />)
     );
   };
   return (
     <div className="TaskList">
-      {
-        tasks.length === 0 ?
-        renderNoTasks()
-        : tasks.map((task, i) => <Task key={i} task={task} completeTaskHandler={completeTaskHandler} />)}
+      {renderTasks()}
     </div>
   );
 };

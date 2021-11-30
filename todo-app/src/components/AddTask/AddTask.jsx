@@ -9,10 +9,16 @@ import './AddTask.css';
 const AddTask = ({addTaskHandler}) => {
   const initialTaskState = {
     title: '',
+    date: '',
     description: '',
+    done: false,
   };
   const initialFormState = {
-    isValid: true
+    isValid: true,
+    fieldsStatus: {
+      title: true,
+      date: true,
+    },
   };
 
   const [task, setTask] = useState(initialTaskState);
@@ -25,12 +31,33 @@ const AddTask = ({addTaskHandler}) => {
   const submitHandler = event => {
     event.preventDefault();
 
+    let isValid = true;
+    const updatedFieldsStatus = {
+      title: true,
+      date: true,
+    };
+
     if(task.title.trim() === '') {
-      setFormState(prevState => ({...prevState, isValid: false}));
-      return;
+      updatedFieldsStatus.title = false;
+      isValid = false;
     }
 
-    setFormState(prevState => ({...prevState, isValid: true}));
+    if(task.date.trim() !== '') {
+      if(!task.date.match(/^\d{4}-\d{2}-\d{2}$/)) {
+        updatedFieldsStatus.date = false;
+        isValid = false;
+      }
+    }
+
+    setFormState(prevState => ({
+      ...prevState,
+      isValid,
+      fieldsStatus: updatedFieldsStatus
+    }));
+
+    if(!isValid) {
+      return;
+    }
 
     task.id = Math.random(); // Demo purpose only
 
@@ -45,8 +72,16 @@ const AddTask = ({addTaskHandler}) => {
         name="title"
         placeholder="Task"
         value={task.title}
-        valid={formState.isValid}
+        valid={formState.fieldsStatus.title}
         errorMessage="Please, add a task title"
+        changeHandler={taskChangeHandler} />
+      <Input
+        type="date" 
+        name="date"
+        placeholder="YYYY-mm-dd"
+        value={task.date}
+        valid={formState.fieldsStatus.date}
+        errorMessage="Please, add a valid date (YYYY-mm-dd)"
         changeHandler={taskChangeHandler} />
       <TextArea
         name="description"

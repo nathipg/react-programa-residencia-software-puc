@@ -1,7 +1,7 @@
 import './Input.css';
 
-const Input = ({type, name, placeholder, value, changeHandler, valid, errorMessage}) => {
-  const titleError = !valid ? (
+const Input = ({type, name, placeholder, value, changeHandler, valid, errorMessage, readOnly}) => {
+  const error = !valid ? (
     <span className="error">{errorMessage}</span>
   ) : null;
 
@@ -12,8 +12,9 @@ const Input = ({type, name, placeholder, value, changeHandler, valid, errorMessa
         name={name}
         placeholder={placeholder}
         value={value}
-        onChange={changeHandler} />
-      {titleError}
+        onChange={changeHandler}
+        readOnly={readOnly} />
+      {error}
     </div>
   );
 };

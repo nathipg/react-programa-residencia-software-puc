@@ -16,8 +16,28 @@
   width: 80%;
 }
 
-.TaskDetails .info h1 {
+.TaskDetails .info header {
+  display: flex;
+  align-items: baseline;
+}
+
+.TaskDetails .info header h1 {
   margin: 0;
+}
+
+.TaskDetails .info header span {
+  font-size: 0.8rem;
+  color: var(--red);
+}
+
+.TaskDetails .info header span.done {
+  color: var(--green);
+}
+
+.TaskDetails section {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .TaskDetails__actions {
