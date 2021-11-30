@@ -89,7 +89,7 @@ const AddTask = ({addTaskHandler}) => {
         value={task.description}
         changeHandler={taskChangeHandler} />
       <Button
-        type="submit">Add Task</Button>
+        type="submit">Add</Button>
     </form>
   );
 };

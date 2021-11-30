@@ -5,3 +5,8 @@
   padding: 2rem 12.5%;
   text-align: center;
 }
+
+.TaskList__date {
+  font-size: 1rem;
+  align-self: flex-start;
+}

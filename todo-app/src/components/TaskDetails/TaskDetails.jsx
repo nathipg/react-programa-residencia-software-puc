@@ -28,10 +28,10 @@ const TaskDetails = ({tasks, completeTaskHandler, removeTaskHandler}) => {
         <Button
           type="button"
           variant="secondary"
-          clickHandler={() => navigate('/')}>Voltar</Button>
+          clickHandler={() => navigate('/')}>Back</Button>
         <div className="info">
           <header>
-            <h1>{task.title}</h1>
+            <h2>{task.title}</h2>
             <span className={task.done ? 'done' : null}>({task.done ? 'DONE' : 'PENDING'})</span>
           </header>
           <section>
@@ -48,11 +48,11 @@ const TaskDetails = ({tasks, completeTaskHandler, removeTaskHandler}) => {
             <div className="TaskDetails__actions">
               <Button
                 type="button"
-                clickHandler={clickComplete}>Complete Task</Button>
+                clickHandler={clickComplete}>Complete</Button>
               <Button
                 type="button"
                 variant="secondary"
-                clickHandler={clickRemove}>Remove Task</Button>
+                clickHandler={clickRemove}>Remove</Button>
             </div>
           </section>
         </div>
