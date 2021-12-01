@@ -1,0 +1,6 @@
+.Error {
+  color: var(--red);
+  display: flex;
+  justify-content: center;
+  padding: 2rem 12.5% 0 12.5%;
+}

@@ -20,15 +20,17 @@ const TaskList = ({tasks, done, completeTaskHandler}) => {
     const datesSorted = dates.sort();
 
     datesSorted.forEach(date => {
-      tasksJsx.push(<h2 key={date} className="TaskList__date">{date === '' ? 'Unscheduled' : date}</h2>);
+      tasksJsx.push(<h2 key={date} className="TaskList__date">{!date ? 'Unscheduled' : date}</h2>);
       tasksByDate[date].forEach(t => {
         tasksJsx.push(<Task key={t.id} task={t} completeTaskHandler={completeTaskHandler} />);
       });
     });
 
+    const noTasksMsg = done ? <p>Nothing to see here, let's do some tasks?</p> : <p>Nothing to do today, have fun!</p>;
+
     return (
       tasksFiltered.length === 0 ?
-        <p>Nothing to do today, have fun!</p>
+        noTasksMsg
         : tasksJsx
     );
   };

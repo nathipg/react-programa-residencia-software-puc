@@ -59,8 +59,6 @@ const AddTask = ({addTaskHandler}) => {
       return;
     }
 
-    task.id = Math.random(); // Demo purpose only
-
     addTaskHandler(task);
     setTask(initialTaskState);
   };

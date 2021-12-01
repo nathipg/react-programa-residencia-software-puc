@@ -17,8 +17,7 @@ const TaskDetails = ({tasks, completeTaskHandler, removeTaskHandler}) => {
   };
 
   const clickRemove = () => {
-    completeTaskHandler(task);
-    navigate('/');
+    removeTaskHandler(task);
   };
   
   return (

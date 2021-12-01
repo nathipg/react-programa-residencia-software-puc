@@ -14,7 +14,10 @@ const Task = ({task, completeTaskHandler}) => {
   return (
     <div className="Task" onClick={clickHandler}>
       <p className="Task__text">{task.title}</p>
-      <button className="Task__button" onClick={() => completeTaskHandler(task)}></button>
+      {
+        !task.done &&
+        <button className="Task__button" onClick={() => completeTaskHandler(task)}></button>
+      }
     </div>
   );
 };
