@@ -1,4 +1,6 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+
 import Button from './Button';
 
 const Wrapper = styled.div`
@@ -31,6 +33,8 @@ const Details = styled.div`
   
   span {
     font-weight: 600;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   button {
@@ -39,8 +43,10 @@ const Details = styled.div`
 `;
 
 const Product = ({product}) => {
+  const navigate = useNavigate();
+
   return (
-    <Wrapper>
+    <Wrapper onClick={() => navigate(`/product-details/${product.id}`)}>
       <PictureWrapper>
         <Picture src={product.picture} />
       </PictureWrapper>

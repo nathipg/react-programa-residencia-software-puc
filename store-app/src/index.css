@@ -9,6 +9,12 @@
   --border-radius: 3px;
   --margin-horizontal: 2rem;
   --margin-top-section: 3rem;
+
+  --mq-sm: 576px;
+  --mq-md: 768px;
+  --mq-lg: 992px;
+  --mq-xl: 1200px;
+  --mq-xxl: 1480px;
 }
 
 body {
@@ -24,4 +30,8 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+#root {
+  min-width: 350px;
 }

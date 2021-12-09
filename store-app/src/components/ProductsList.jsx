@@ -9,7 +9,7 @@ const Wrapper = styled.div`
 const ProductsList = ({products}) => {
   const renderProducts = () => {
     if(products.length === 0) {
-      return <span>No products found</span>
+      return <span>No products found</span>;
     }
 
     return products.map(product => <Product key={product.id} product={product} />);

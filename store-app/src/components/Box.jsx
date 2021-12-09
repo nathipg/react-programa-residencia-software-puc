@@ -1,11 +1,20 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const StyledBox = styled.div`
-  border: 3px solid black;
-  padding: 1rem 3rem 3rem 3rem;
-  border-radius: var(--border-radius);
   display: flex;
   flex-direction: column;
+  background-color: white;
+
+  ${({ variant }) => (!variant || variant === 'primary') && css`
+    border-radius: var(--border-radius);
+    border: 3px solid black;
+    padding: 1rem 3rem 3rem 3rem;
+  `}
+
+  ${({ variant }) => variant === 'secondary' && css`
+    border: 1px solid var(--gray);
+    padding: 1rem;
+  `}
 `;
 
 const Title = styled.h1`
@@ -15,10 +24,10 @@ const Title = styled.h1`
   margin-bottom: 3rem;
 `;
 
-const Box = ({ children, title }) => {
+const Box = ({ children, title, variant }) => {
   return (
-    <StyledBox>
-      <Title>{title}</Title>
+    <StyledBox variant={variant}>
+      {title && <Title>{title}</Title>}
       {children}
     </StyledBox>
   );

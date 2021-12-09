@@ -1,15 +1,10 @@
-import styled from 'styled-components';
-
 import Input from '../components/Input';
 import ProductsList from '../components/ProductsList';
+import SectionWrapper from '../components/SectionWrapper';
 
-const Wrapper = styled.div`
-  padding: var(--margin-top-section) var(--margin-horizontal);
-`;
-
-const Products = () => {
+const Products = ({ products }) => {
   return (
-    <Wrapper>
+    <SectionWrapper>
       <Input
           label="Search products..."
           name="search"
@@ -17,32 +12,8 @@ const Products = () => {
           value=""
           onChange={() => {}} />
       <ProductsList 
-        products={[{
-          id: 1,
-          name: 'Book',
-          picture: 'https://img.elo7.com.br/product/original/377F9D5/caderno-old-book-mandala-preto.jpg',
-        }, {
-          id: 2,
-          name: 'Book',
-          picture: 'https://img.elo7.com.br/product/original/377F9D5/caderno-old-book-mandala-preto.jpg',
-        }, {
-          id: 3,
-          name: 'Book',
-          picture: 'https://img.elo7.com.br/product/original/377F9D5/caderno-old-book-mandala-preto.jpg',
-        }, {
-          id: 4,
-          name: 'Book',
-          picture: 'https://img.elo7.com.br/product/original/377F9D5/caderno-old-book-mandala-preto.jpg',
-        }, {
-          id: 5,
-          name: 'Book',
-          picture: 'https://img.elo7.com.br/product/original/377F9D5/caderno-old-book-mandala-preto.jpg',
-        }, {
-          id: 6,
-          name: 'Book',
-          picture: 'https://img.elo7.com.br/product/original/377F9D5/caderno-old-book-mandala-preto.jpg',
-        }]} />
-    </Wrapper>
+        products={products} />
+    </SectionWrapper>
   );
 }
 
