@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Button from './Button';
+import Picture from './Picture';
 
 const Wrapper = styled.div`
   padding: 0.5rem;
@@ -12,15 +13,11 @@ const Wrapper = styled.div`
 `;
 
 const PictureWrapper = styled.div`
+  background-color: white;
   border-top-left-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius);
-  min-height: 13rem;
-  max-height: 13rem;
+  height: 13rem;
   overflow: hidden;
-`;
-
-const Picture = styled.img`
-  width: stretch;
 `;
 
 const Details = styled.div`
@@ -48,7 +45,7 @@ const Product = ({product}) => {
   return (
     <Wrapper onClick={() => navigate(`/product-details/${product.id}`)}>
       <PictureWrapper>
-        <Picture src={product.picture} />
+        <Picture src={product.picture} width="stretch" />
       </PictureWrapper>
       <Details>
         <span>{product.name}</span>

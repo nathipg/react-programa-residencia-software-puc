@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components';
 
+import Title from './Title';
+
 const StyledBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -17,17 +19,20 @@ const StyledBox = styled.div`
   `}
 `;
 
-const Title = styled.h1`
-  font-family: sans-serif;
-  font-size: 1.5rem;
-  margin: 0 auto;
+const TitleWrapper = styled.div`
   margin-bottom: 3rem;
 `;
 
 const Box = ({ children, title, variant }) => {
   return (
     <StyledBox variant={variant}>
-      {title && <Title>{title}</Title>}
+      {
+        title && (
+          <TitleWrapper>
+            <Title>{title}</Title>
+          </TitleWrapper>
+        )
+      }
       {children}
     </StyledBox>
   );

@@ -29,7 +29,7 @@ const Table = styled.table`
   }
 `;
 
-const OrderItems = ({ items }) => {
+const OrderItems = ({ items, edit }) => {
   const renderItems = () => {
     if(items.length === 0) {
       return <tr>
@@ -37,7 +37,7 @@ const OrderItems = ({ items }) => {
       </tr>;
     }
 
-    return items.map(item => <OrderItem key={item.product.id} item={item} />)
+    return items.map(item => <OrderItem key={item.product.id} item={item} edit={edit} />)
   };
 
   return (

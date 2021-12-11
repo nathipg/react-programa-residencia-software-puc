@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Box from '../components/Box';
 import Button from '../components/Button';
 import Input from '../components/Input';
+import InputsWrapper from '../components/InputsWrapper';
 
 const StyledLogin = styled.div`
   display: flex;
@@ -18,18 +19,20 @@ const Login = () => {
   return (
     <StyledLogin>
       <Box title="Welcome to StoreApp">
-        <Input
-          label="User"
-          name="user"
-          type="text"
-          value=""
-          onChange={() => {}} />
-        <Input
-          label="Password"
-          name="password"
-          type="password"
-          value=""
-          onChange={() => {}} />
+        <InputsWrapper>
+          <Input
+            label="User"
+            name="user"
+            type="text"
+            value=""
+            onChange={() => {}} />
+          <Input
+            label="Password"
+            name="password"
+            type="password"
+            value=""
+            onChange={() => {}} />
+        </InputsWrapper>
         <Button
           variant="primary">Login</Button>
         <Button

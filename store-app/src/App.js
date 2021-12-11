@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import Header from './components/Header';
+import AddProduct from './containers/AddProduct';
 import Cart from './containers/Cart';
 import CreateAccount from './containers/CreateAccount';
 import Login from './containers/Login';
@@ -86,26 +87,38 @@ const App = () => {
       id: 1,
       name: 'Book',
       picture: 'https://img.elo7.com.br/product/original/377F9D5/caderno-old-book-mandala-preto.jpg',
+      price: 50,
+      description: 'A nice book to read once in a while',
     }, {
       id: 2,
       name: 'Book',
       picture: 'https://img.elo7.com.br/product/original/377F9D5/caderno-old-book-mandala-preto.jpg',
+      price: 50,
+      description: 'A nice book to read once in a while',
     }, {
       id: 3,
       name: 'Book',
       picture: 'https://img.elo7.com.br/product/original/377F9D5/caderno-old-book-mandala-preto.jpg',
+      price: 50,
+      description: 'A nice book to read once in a while',
     }, {
       id: 4,
       name: 'Book',
       picture: 'https://img.elo7.com.br/product/original/377F9D5/caderno-old-book-mandala-preto.jpg',
+      price: 50,
+      description: 'A nice book to read once in a while',
     }, {
       id: 5,
       name: 'Book',
       picture: 'https://img.elo7.com.br/product/original/377F9D5/caderno-old-book-mandala-preto.jpg',
+      price: 50,
+      description: 'A nice book to read once in a while',
     }, {
       id: 6,
       name: 'Book',
       picture: 'https://img.elo7.com.br/product/original/377F9D5/caderno-old-book-mandala-preto.jpg',
+      price: 50,
+      description: 'A nice book to read once in a while',
     }];
 
   return (
@@ -121,6 +134,7 @@ const App = () => {
         <Route path="/my-orders" element={<Orders orders={orders} />} />
         <Route path="/order-details/:id" element={<OrderDetails orders={orders} />} />
         <Route path="/product-details/:id" element={<ProductDetails products={products} />} />
+        <Route path="/add-product" element={<AddProduct />} />
         <Route path="*" element={<Navigate replace to="/" />} />
       </Routes>
     </>

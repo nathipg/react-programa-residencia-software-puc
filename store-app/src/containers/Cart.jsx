@@ -41,7 +41,7 @@ const Cart = () => {
   return (
     <SectionWrapper>
       <StyledCart>
-        <OrderItems items={cart.items} />
+        <OrderItems items={cart.items} edit={true} />
         <CartSummary total={cart.total} />
       </StyledCart>
     </SectionWrapper>

@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import Title from './Title';
+
 const StyledLogo = styled.div`
   display: inline-flex;
   align-items: center;
@@ -110,13 +112,6 @@ const Icon = styled.div`
   }
 `;
 
-const Title = styled.h1`
-  font-size: 1.5rem;
-  margin: 0;
-  margin-left: 0.5rem;
-  color: white;
-`;
-
 const Logo = ({clickHandler}) => {
   return (
     <StyledLogo onClick={clickHandler}>
@@ -126,7 +121,7 @@ const Logo = ({clickHandler}) => {
         <div className="line-3"></div>
         <div className="wheel"></div>
       </Icon>
-      <Title>StoreApp</Title>
+      <Title color="white">StoreApp</Title>
     </StyledLogo>
   );
 }

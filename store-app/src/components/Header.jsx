@@ -37,7 +37,7 @@ const Header = () => {
           <DropdownMenuOptions to="/cart">Cart</DropdownMenuOptions>
           <DropdownMenuOptions to="/my-orders">My Orders</DropdownMenuOptions>
           <DropdownMenuOptions to="/all-orders">All Orders</DropdownMenuOptions>
-          <DropdownMenuOptions to="/add-products">Add Products</DropdownMenuOptions>
+          <DropdownMenuOptions to="/add-product">Add Products</DropdownMenuOptions>
           <DropdownMenuOptions to="/login">Logout</DropdownMenuOptions>
         </DropdownMenu>
       </Options>

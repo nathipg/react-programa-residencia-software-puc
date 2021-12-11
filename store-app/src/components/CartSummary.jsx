@@ -2,15 +2,9 @@ import styled from 'styled-components';
 
 import Box from './Box';
 import Button from './Button';
+import Title from './Title';
 
 const Wrapper = styled.div``;
-
-const Title = styled.h2`
-  text-transform: uppercase;
-  font-weight: normal;
-  font-size: 1rem;
-  margin: 0 0 2px 1rem;
-`;
 
 const DetailsWrapper = styled.div`
   display: flex;
@@ -34,10 +28,16 @@ const Details = styled.div`
   }
 `;
 
+const TitleWrapper = styled.div`
+  margin: 0 0 2px 1rem;
+`;
+
 const CartSummary = ({total}) => {
   return (
     <Wrapper>
-      <Title>Summary</Title>
+      <TitleWrapper>
+        <Title level="2">Summary</Title>
+      </TitleWrapper>
       <Box variant="secondary">
         <DetailsWrapper>
           <Details>

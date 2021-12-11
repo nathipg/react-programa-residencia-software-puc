@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
+import Input from './Input';
+import Picture from './Picture';
+
 const Item = styled.tr`
   td {
     padding: 1rem;
@@ -7,19 +10,25 @@ const Item = styled.tr`
   }
 `;
 
-const Picture = styled.img`
-  min-width: 9rem;
-  max-width: 9rem;
-`;
-
-const OrdersItemsListItem = ({ item }) => {
+const OrdersItemsListItem = ({ item, edit }) => {
   return (
     <Item>
       <td>
-        <Picture src={item.product.picture} />
+        <Picture src={item.product.picture} width="9rem" />
       </td>
       <td>{item.product.name}</td>
-      <td>{item.qty}</td>
+      <td>
+        {
+          edit && 
+          <Input
+            name="qty"
+            type="number"
+            value={item.qty}
+            size="sm"
+            onChange={() => {}} />
+        }
+        {!edit && item.qty}
+      </td>
       <td>$ {item.product.price}</td>
       <td>$ {item.total}</td>
     </Item>

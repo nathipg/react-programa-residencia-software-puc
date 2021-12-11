@@ -2,10 +2,15 @@ import styled, { css } from 'styled-components';
 
 const Wrapper = styled.div`
   position: relative;
-  margin-bottom: 1rem;
+
+  ${({ size }) => size === 'sm' && css`
+    width: fit-content;
+    margin: 0 auto;
+  `}
 
   textarea {
     min-height: 150px;
+    padding: 1rem;
   }
 `;
 
@@ -29,15 +34,21 @@ Label.Text = styled.span`
 const StyledInput = styled.input`
   border: 1px solid black;
   display: block;
-  height: 3.5rem;
   outline: 0;
-  padding: 0 1rem;
   resize: none;
   border-radius: var(--border-radius);
   font-size: 1.2rem;
+  transition: border-color .3s;
+  height: 3.5rem;
+  padding: 0 1rem;
   width: stretch;
 
-  transition: border-color .3s;
+
+  ${({ size }) => size === 'sm' && css`
+    height: 2.5rem;
+    padding: 0 0.5rem;
+    width: 3rem;
+  `}
 
   &:focus + span {
     transform: scale(.6) translateY(-10px);
@@ -60,30 +71,48 @@ const InvalidMessage = styled.span`
 `;
 
 const Input = ({
-  as, label, type, name, value, onChange, invalid, invalidMessage, touched
+  as, label, type, name, value, onChange, invalid, invalidMessage, touched, size
 }) => {
   const fieldId = `id_${name}`;
-  const hasValue = Boolean(value.length);
+  const hasValue = !!value.length;
+  const hasLabel = !!label;
 
   return (
-    <Wrapper>
-      <Label
-        htmlFor={fieldId}
-      >
-        <StyledInput
-          id={fieldId}
-          as={as}
-          type={type}
-          name={name}
-          value={value}
-          hasValue={hasValue}
-          onChange={onChange}
-          invalid={invalid}
-        />
-        <Label.Text>
-          {label}
-        </Label.Text>
-      </Label>
+    <Wrapper size={size}>
+      {
+        hasLabel && (
+          <Label
+            htmlFor={fieldId}>
+            <StyledInput
+              id={fieldId}
+              as={as}
+              type={type}
+              name={name}
+              value={value}
+              hasValue={hasValue}
+              onChange={onChange}
+              invalid={invalid}
+              size={size} />
+            <Label.Text>
+              {label}
+            </Label.Text>
+          </Label>
+        )
+      }
+      {
+        !hasLabel && (
+          <StyledInput
+            id={fieldId}
+            as={as}
+            type={type}
+            name={name}
+            value={value}
+            hasValue={hasValue}
+            onChange={onChange}
+            invalid={invalid}
+            size={size} />
+        )
+      }
       {
         touched &&
         invalid && 
