@@ -43,7 +43,7 @@ const Header = () => {
         {ctx.isLoggedIn && (
           <>
             <DropdownMenuTrigger clickHandler={toggleMenu}>
-              <UserIcon name="Pissuti" />
+              <UserIcon name={ctx.loggedUser.name} />
             </DropdownMenuTrigger>
             <DropdownMenu show={showMenu} closeHandler={toggleMenu}>
               <DropdownMenuOptions to="/cart">Cart</DropdownMenuOptions>

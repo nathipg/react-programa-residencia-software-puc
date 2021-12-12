@@ -40,16 +40,20 @@ export const AuthContextProvider = (props) => {
 
       if(token) {
         (async () => {
-          const response = await axios.post('http://localhost:3001/token', {
-            token
-          });
-  
-          if(response.status !== 200) {
-            return;
+          try {
+            const response = await axios.post('http://localhost:3001/token', {
+              token,
+            });
+    
+            if(response.status !== 200) {
+              return;
+            }
+    
+            setLoggedUser(response.data);
+            setIsLoggedIn(true);
+          } catch(e) {
+            localStorage.removeItem('loggedToken');
           }
-  
-          setLoggedUser(response.data);
-          setIsLoggedIn(true);
         })();
       }
     }, []);

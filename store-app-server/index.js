@@ -13,6 +13,24 @@ Order.belongsToMany(Product, { through: OrderItem });
 
 sequelize.sync().then(() => console.log('db created')); // {force: true}
 
+(async () => {
+  const adminUser = await User.findOne({
+    where: {
+      username: 'admin',
+    },
+  });
+  
+  if(!adminUser) {
+    await User.create({
+      name: 'Admin',
+      email: 'admin@admin.com',
+      username: 'admin',
+      password: 'pwd',
+      admin: 1,
+    });
+  }
+})();
+
 const app = express();
 
 app.use(cors());
@@ -29,10 +47,10 @@ app.post('/login', async (req, res) => {
     },
   });
 
-  user.token = Math.random().toString(16).substr(2);
-  await user.save();
-
   if(user) {
+    user.token = Math.random().toString(16).substr(2);
+    await user.save();
+
     res.send(user.dataValues);
     return;
   }
@@ -48,7 +66,12 @@ app.post('/token', async (req, res) => {
     },
   });
 
-  res.send(user.dataValues);
+  if(user) {
+    res.send(user.dataValues);
+  }
+
+  res.statusCode = 404;
+  res.send();
 });
 
 // User
