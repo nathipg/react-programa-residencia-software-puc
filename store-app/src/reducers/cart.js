@@ -5,7 +5,7 @@ const changeItemQtyActions = {
 };
 
 const changeItemQty = (cartState, product, action) => {
-  const itemIndex = cartState.items.findIndex(item => item.product.id === product.id);
+  const itemIndex = cartState.items.findIndex(item => item.id === product.id);
   const item = itemIndex !== -1 ? cartState.items[itemIndex] : null;
   let updatedItem;
   let newTotal;
@@ -14,16 +14,20 @@ const changeItemQty = (cartState, product, action) => {
     case changeItemQtyActions.INCREASE:
       if(itemIndex === -1) {
         updatedItem = {
-          product: product,
-          qty: 1,
-          price: product.price,
+          ...product,
+          orderItem: {
+            qty: 1,
+            price: product.price,
+          },
         };
       } else {
         const item = cartState.items[itemIndex];
         updatedItem = {
           ...item,
-          qty: item.qty + 1,
-          price: item.price + product.price,
+          orderItem: {
+            qty: item.orderItem.qty + 1,
+            price: item.orderItem.price + product.price,
+          },
         };
       }
       newTotal = cartState.total + product.price;
@@ -31,13 +35,15 @@ const changeItemQty = (cartState, product, action) => {
     case changeItemQtyActions.DECREASE:
       updatedItem = {
         ...item,
-        qty: item.qty - 1,
-        price: item.price - product.price,
+        orderItem: {
+          qty: item.orderItem.qty - 1,
+          price: item.orderItem.price - product.price,
+        },
       };
       newTotal = cartState.total - product.price;
       break;
     case changeItemQtyActions.REMOVE:
-      newTotal = cartState.total - item.price;
+      newTotal = cartState.total - item.orderItem.price;
       break;
     default:
       throw new Error('Invalid action');
@@ -75,16 +81,20 @@ const addHandler = (prevState, action) => {
 
 const changeQtyHandler = (prevState, action) => {
   const { newValue, product } = action;
-  const itemIndex = prevState.items.findIndex(item => item.product.id === product.id);
+  const itemIndex = prevState.items.findIndex(item => item.id === product.id);
   const item = prevState.items[itemIndex];
   
   if(newValue === '0') {
     return changeItemQty(prevState, product, changeItemQtyActions.REMOVE);
-  } else if(+newValue > item.qty) {
+  } else if(+newValue > item.orderItem.qty) {
     return changeItemQty(prevState, product, changeItemQtyActions.INCREASE);
   } else {
     return changeItemQty(prevState, product, changeItemQtyActions.DECREASE);
   }
+};
+
+const resetHandler = (prevState, action) => {
+  return action.cart;
 };
 
 export const cartReducer = (prevState, action) => {
@@ -93,6 +103,8 @@ export const cartReducer = (prevState, action) => {
       return addHandler(prevState, action);
     case cartReducerActions.CHANGE_QTY:
       return changeQtyHandler(prevState, action);
+    case cartReducerActions.RESET:
+      return resetHandler(prevState, action);
     default:
       throw new Error('Invalid action');
   }
@@ -101,4 +113,5 @@ export const cartReducer = (prevState, action) => {
 export const cartReducerActions = {
   ADD: 'ADD',
   CHANGE_QTY: 'CHANGE_QTY',
+  RESET: 'RESET',
 };

@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import Button from '../components/Button';
 
+import Button from '../components/Button';
 import Picture from '../components/Picture';
 import SectionWrapper from '../components/SectionWrapper';
 import Title from '../components/Title';

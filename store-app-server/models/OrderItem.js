@@ -7,12 +7,12 @@ OrderItem.init({
   qty: {
     type: DataTypes.NUMBER,
   },
-  total: {
+  price: {
     type: DataTypes.NUMBER,
   },
 }, {
   sequelize,
-  modelName: 'order-item',
+  modelName: 'orderItem',
   timestamps: false,
 });
 

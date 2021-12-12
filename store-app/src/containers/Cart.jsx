@@ -14,7 +14,7 @@ const StyledCart = styled.div`
   }
 `;
 
-const Cart = ({ cart, changeQtyHandler }) => {
+const Cart = ({ cart, changeQtyHandler, addOrderHandler }) => {
   return (
     <SectionWrapper>
       <StyledCart>
@@ -25,7 +25,7 @@ const Cart = ({ cart, changeQtyHandler }) => {
               items={cart.items} 
               edit={true} 
               changeQtyHandler={changeQtyHandler} />
-            <CartSummary total={cart.total} />
+            <CartSummary cart={cart} addOrderHandler={addOrderHandler} />
           </>
         )}
       </StyledCart>

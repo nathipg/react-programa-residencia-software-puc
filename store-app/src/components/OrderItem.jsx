@@ -11,29 +11,29 @@ const Item = styled.tr`
   }
 `;
 
-const OrdersItemsListItem = ({ item, edit, changeQtyHandler }) => {
+const OrderItem = ({ item, edit, changeQtyHandler }) => {
   return (
     <Item>
       <td>
-        <Picture src={item.product.picture} width="9rem" />
+        <Picture src={item.picture} width="9rem" />
       </td>
-      <td>{item.product.name}</td>
+      <td>{item.name}</td>
       <td>
         {
           edit && 
           <Input
             name="qty"
             type="number"
-            value={item.qty}
+            value={item.orderItem.qty}
             size="sm"
-            onChange={event => changeQtyHandler(event, item.product)} />
+            onChange={event => changeQtyHandler(event, item)} />
         }
-        {!edit && item.qty}
+        {!edit && item.orderItem.qty}
       </td>
-      <td>$ {item.product.price.toFixed(2)}</td>
       <td>$ {item.price.toFixed(2)}</td>
+      <td>$ {item.orderItem.price.toFixed(2)}</td>
     </Item>
   );
 }
 
-export default OrdersItemsListItem;
+export default OrderItem;

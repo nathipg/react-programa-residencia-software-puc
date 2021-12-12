@@ -5,6 +5,11 @@ const sequelize = require('./database');
 const Product = require('./models/Product');
 const User = require('./models/User');
 const Order = require('./models/Order');
+const OrderItem = require('./models/OrderItem');
+
+Order.belongsTo(User);
+User.hasMany(Order);
+Order.belongsToMany(Product, { through: OrderItem });
 
 sequelize.sync().then(() => console.log('db created')); // {force: true}
 
@@ -37,6 +42,40 @@ app.post('/user', async (req, res) => {
 });
 
 // Order
+
+app.get('/order', async (req, res) => {
+  const orders = await Order.findAll({
+    include: Product,
+  });
+  res.send(orders);
+});
+
+app.post('/order', async (req, res) => {
+  const todayObj = new Date();
+  const today = `${todayObj.getFullYear()}-${todayObj.getMonth() + 1}-${todayObj.getDate()}`;
+  
+  const user = await User.findByPk(req.body.userId);
+  const order = await user.createOrder({
+    total: req.body.total,
+    date: today,
+  });
+
+  for(const item of req.body.items) {
+    const product = await Product.findByPk(item.id);
+    await order.addProduct(product, {
+      through: {
+        qty: item.orderItem.qty,
+        price: item.orderItem.price,
+      },
+    });
+  }
+
+  const result = await Order.findByPk(order.id, {
+    include: Product,
+  });
+
+  res.send(result);
+});
 
 app.listen(3001, () => {
   console.log('app is running');

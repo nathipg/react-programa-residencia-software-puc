@@ -45,7 +45,7 @@ const OrderItems = ({ items, edit, changeQtyHandler }) => {
         <tbody>
           {items.map(item => (
             <OrderItem 
-              key={item.product.id} 
+              key={item.id} 
               item={item} 
               edit={edit}
               changeQtyHandler={changeQtyHandler} />

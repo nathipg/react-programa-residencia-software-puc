@@ -32,7 +32,7 @@ const TitleWrapper = styled.div`
   margin: 0 0 2px 1rem;
 `;
 
-const CartSummary = ({total}) => {
+const CartSummary = ({ cart, addOrderHandler }) => {
   return (
     <Wrapper>
       <TitleWrapper>
@@ -42,9 +42,11 @@ const CartSummary = ({total}) => {
         <DetailsWrapper>
           <Details>
             <span className="text">Total</span>
-            <span className="value">$ {total.toFixed(2)}</span>
+            <span className="value">$ {cart.total.toFixed(2)}</span>
           </Details>
-          <Button variant="primary">Buy</Button>
+          <Button 
+            variant="primary"
+            onClick={event => addOrderHandler(event, cart)}>Buy</Button>
         </DetailsWrapper>
       </Box>
     </Wrapper>

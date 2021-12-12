@@ -20,7 +20,7 @@ const OrderDetails = ({ orders }) => {
     <SectionWrapper>
       <Wrapper>
         <OrdersListItem order={order} showButton={false} />
-        <OrderItems items={order.items} />
+        <OrderItems items={order.products} />
       </Wrapper>
     </SectionWrapper>
   );
