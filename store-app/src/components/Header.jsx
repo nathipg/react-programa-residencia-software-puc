@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ import DropdownMenuOptions from './DropdownMenuOptions';
 import DropdownMenuTrigger from './DropdownMenuTrigger';
 import Logo from './Logo';
 import UserIcon from './UserIcon';
+import AuthContext from '../store/auth-context';
 
 const StyledHeader = styled.div`
   display: flex;
@@ -19,27 +20,44 @@ const StyledHeader = styled.div`
 const Options = styled.div``;
 
 const Header = () => {
-  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
+  const navigate = useNavigate();
+  const ctx = useContext(AuthContext);
 
   const toggleMenu = () => {
     setShowMenu(prevState => !prevState);
   };
 
+  const clickLogoHandler = () => {
+    if(ctx.isLoggedIn) {
+      navigate('/');
+    } else {
+      navigate('/login');
+    }
+  };
+
   return (
     <StyledHeader>
-      <Logo clickHandler={() => navigate('/')} />
+      <Logo clickHandler={clickLogoHandler} />
       <Options>
-        <DropdownMenuTrigger clickHandler={toggleMenu}>
-          <UserIcon name="Pissuti" />
-        </DropdownMenuTrigger>
-        <DropdownMenu show={showMenu} closeHandler={toggleMenu}>
-          <DropdownMenuOptions to="/cart">Cart</DropdownMenuOptions>
-          <DropdownMenuOptions to="/my-orders">My Orders</DropdownMenuOptions>
-          <DropdownMenuOptions to="/all-orders">All Orders</DropdownMenuOptions>
-          <DropdownMenuOptions to="/add-product">Add Products</DropdownMenuOptions>
-          <DropdownMenuOptions to="/login">Logout</DropdownMenuOptions>
-        </DropdownMenu>
+        {ctx.isLoggedIn && (
+          <>
+            <DropdownMenuTrigger clickHandler={toggleMenu}>
+              <UserIcon name="Pissuti" />
+            </DropdownMenuTrigger>
+            <DropdownMenu show={showMenu} closeHandler={toggleMenu}>
+              <DropdownMenuOptions to="/cart">Cart</DropdownMenuOptions>
+              <DropdownMenuOptions to="/my-orders">My Orders</DropdownMenuOptions>
+              {ctx.loggedUser.admin === 1 && (
+                <>
+                  <DropdownMenuOptions to="/all-orders">All Orders</DropdownMenuOptions>
+                  <DropdownMenuOptions to="/add-product">Add Products</DropdownMenuOptions>
+                </>
+              )}
+              <DropdownMenuOptions as="span" onClick={ctx.logoutHandler}>Logout</DropdownMenuOptions>
+            </DropdownMenu>
+          </>
+        )}
       </Options>
     </StyledHeader>
   );

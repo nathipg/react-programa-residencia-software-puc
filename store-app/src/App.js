@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useReducer, useState } from 'react';
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useCallback, useContext, useEffect, useReducer, useState } from 'react';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 
 import Header from './components/Header';
 import Loading from './components/Loading';
@@ -19,6 +19,8 @@ import { productReducer, productReducerActions } from './reducers/product';
 import { cartReducer, cartReducerActions } from './reducers/cart';
 import { orderReducer, orderReducerActions } from './reducers/order';
 
+import AuthContext from './store/auth-context';
+
 const App = () => {
   const cartInitialState = {
     total: 0,
@@ -28,13 +30,17 @@ const App = () => {
   const [users, dispatchUsers] = useReducer(userReducer, []);
   const [orders, dispatchOrders] = useReducer(orderReducer, []);
   const [cart, dispatchCart] = useReducer(cartReducer, cartInitialState);
-  const navigate = useNavigate();
   const [loading, setLoading] = useState({
     complete: false,
     error: false,
   });
-  const loggedUserId = 2; // Demo data
-  const loggedUserOrders = orders.filter(o => o.userId === loggedUserId);
+  const navigate = useNavigate();
+  const ctx = useContext(AuthContext);
+  let loggedUserOrders = [];
+
+  if(ctx.isLoggedIn) {
+    loggedUserOrders = orders.filter(o => o.userId === ctx.loggedUser.id);
+  }
 
   const addUserHandler = async user => {
     const response = await axios.post('http://localhost:3001/user', user);
@@ -88,7 +94,7 @@ const App = () => {
   const addOrderHandler = async (event, cart) => {
     const response = await axios.post('http://localhost:3001/order', {
       ...cart,
-      userId: loggedUserId,
+      userId: ctx.loggedUser.id,
     });
     
     if(response.status !== 200) {
@@ -208,16 +214,26 @@ const App = () => {
 
       {loading.complete && !loading.error && (
         <Routes>
-          <Route path="/" exact element={<Products products={products} addCartItemHandler={addCartItemHandler} />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/create-account" element={<CreateAccount users={users} addUserHandler={addUserHandler} />} />
-          <Route path="/cart" element={<Cart cart={cart} changeQtyHandler={changeQtyHandler} addOrderHandler={addOrderHandler} />} />
-          <Route path="/all-orders" element={<Orders orders={orders} />} />
-          <Route path="/my-orders" element={<Orders orders={loggedUserOrders} />} />
-          <Route path="/order-details/:id" element={<OrderDetails orders={orders} />} />
-          <Route path="/product-details/:id" element={<ProductDetails products={products} addCartItemHandler={addCartItemHandler} />} />
-          <Route path="/add-product" element={<AddProduct addProductHandler={addProductHandler} />} />
-          <Route path="*" element={<Navigate replace to="/" />} />
+          {!ctx.isLoggedIn && (
+            <>
+              <Route path="/login" element={<Login />} />
+              <Route path="/create-account" element={<CreateAccount users={users} addUserHandler={addUserHandler} />} />
+            </>
+          )}
+
+          {ctx.isLoggedIn && (
+            <>
+              <Route path="/" exact element={<Products products={products} addCartItemHandler={addCartItemHandler} />} />
+              <Route path="/cart" element={<Cart cart={cart} changeQtyHandler={changeQtyHandler} addOrderHandler={addOrderHandler} />} />
+              <Route path="/all-orders" element={<Orders orders={orders} />} />
+              <Route path="/my-orders" element={<Orders orders={loggedUserOrders} />} />
+              <Route path="/order-details/:id" element={<OrderDetails orders={orders} />} />
+              <Route path="/product-details/:id" element={<ProductDetails products={products} addCartItemHandler={addCartItemHandler} />} />
+              <Route path="/add-product" element={<AddProduct addProductHandler={addProductHandler} />} />
+            </>
+          )}
+
+          <Route path="*" element={<Navigate replace to={ctx.isLoggedIn ? '/' : '/login'} />} />
         </Routes>
       )}
     </>

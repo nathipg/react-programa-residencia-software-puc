@@ -19,15 +19,36 @@ app.use(cors());
 
 app.use(express.json());
 
-// Product
-app.get('/product', async (req, res) => {
-  const products = await Product.findAll();
-  res.send(products);
+// Login
+app.post('/login', async (req, res) => {
+  const login = req.body;
+  const user = await User.findOne({
+    where: {
+      username: login.username,
+      password: login.password,
+    },
+  });
+
+  user.token = Math.random().toString(16).substr(2);
+  await user.save();
+
+  if(user) {
+    res.send(user.dataValues);
+    return;
+  }
+
+  res.statusCode = 401;
+  res.send();
 });
 
-app.post('/product', async (req, res) => {
-  const result = await Product.create(req.body);
-  res.send(result.dataValues);
+app.post('/token', async (req, res) => {
+  const user = await User.findOne({
+    where: {
+      token: req.body.token,
+    },
+  });
+
+  res.send(user.dataValues);
 });
 
 // User
@@ -38,6 +59,17 @@ app.get('/user', async (req, res) => {
 
 app.post('/user', async (req, res) => {
   const result = await User.create(req.body);
+  res.send(result.dataValues);
+});
+
+// Product
+app.get('/product', async (req, res) => {
+  const products = await Product.findAll();
+  res.send(products);
+});
+
+app.post('/product', async (req, res) => {
+  const result = await Product.create(req.body);
   res.send(result.dataValues);
 });
 

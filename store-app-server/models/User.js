@@ -19,6 +19,9 @@ User.init({
   admin: {
     type: DataTypes.NUMBER,
   },
+  token: {
+    type: DataTypes.STRING,
+  },
 }, {
   sequelize,
   modelName: 'user',
