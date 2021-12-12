@@ -1,8 +1,11 @@
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Button from './Button';
 import Picture from './Picture';
+
+import CartContext from '../store/contexts/cart';
 
 const Wrapper = styled.div`
   padding: 0.5rem;
@@ -39,23 +42,24 @@ const Details = styled.div`
   }
 `;
 
-const Product = ({ product, addCartItemHandler }) => {
+const Product = ({ product }) => {
   const navigate = useNavigate();
+  const cartCtx = useContext(CartContext);
 
   const clickWrapperHandler = event => {
     if(event.target.tagName !== 'BUTTON') {
       navigate(`/product-details/${product.id}`)
     }
-  }
+  };
 
   return (
     <Wrapper onClick={clickWrapperHandler}>
       <PictureWrapper>
-        <Picture src={product.picture} width="stretch" />
+        <Picture src={product.picture} width="stretch" height="13rem" />
       </PictureWrapper>
       <Details>
         <span>{product.name}</span>
-        <Button variant="primary" size="sm" onClick={() => addCartItemHandler(product)}>Buy</Button>
+        <Button variant="primary" size="sm" onClick={() => cartCtx.addItemHandler(product)}>Buy</Button>
       </Details>
     </Wrapper>
   );

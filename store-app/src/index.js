@@ -3,16 +3,23 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
+import ComposeContext from './components/ComposeContext';
 
-import { AuthContextProvider } from './store/auth-context';
+import { AuthContextProvider } from './store/contexts/auth';
+import { CartContextProvider } from './store/contexts/cart';
+import { OrderContextProvider } from './store/contexts/order';
+import { ProductContextProvider } from './store/contexts/product';
+import { UserContextProvider } from './store/contexts/user';
 
 import './index.css';
 
 ReactDOM.render(
   <BrowserRouter>
-    <AuthContextProvider>
+    <ComposeContext contextProviders={[
+      AuthContextProvider, CartContextProvider, OrderContextProvider, ProductContextProvider, UserContextProvider
+    ]}>
       <App />
-    </AuthContextProvider>
+    </ComposeContext>
   </BrowserRouter>,
   document.getElementById('root')
 );

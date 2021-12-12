@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -5,6 +6,9 @@ import Button from '../components/Button';
 import Picture from '../components/Picture';
 import SectionWrapper from '../components/SectionWrapper';
 import Title from '../components/Title';
+
+import CartContext from '../store/contexts/cart';
+import ProductContext from '../store/contexts/product';
 
 const Wrapper = styled.div`
   @media (min-width: 576px) {
@@ -36,10 +40,13 @@ const Details = styled.div`
   flex-direction: column;
 `;
 
-const ProductDetails = ({ products, addCartItemHandler }) => {
+const ProductDetails = () => {
+  const cartCtx = useContext(CartContext);
+  const productCtx = useContext(ProductContext);
+
   const params = useParams();
   const productId = +params.id;
-  const product = products.find(p => p.id === productId);
+  const product = productCtx.products.find(p => p.id === productId);
 
   return (
     <SectionWrapper>
@@ -51,7 +58,7 @@ const ProductDetails = ({ products, addCartItemHandler }) => {
           <p>{product.description}</p>
           <Button 
             variant="primary"
-            onClick={() => addCartItemHandler(product)}>Buy</Button>
+            onClick={() => cartCtx.addItemHandler(product)}>Buy</Button>
         </Details>
       </Wrapper>
     </SectionWrapper>

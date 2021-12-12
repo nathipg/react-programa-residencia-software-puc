@@ -20,7 +20,7 @@ const Icon = styled.div`
 const UserIcon = ({ name }) => {
   return (
     <Wrapper>
-      <Icon>{name[0]}</Icon>
+      <Icon>{name[0].toUpperCase()}</Icon>
     </Wrapper>
   );
 }

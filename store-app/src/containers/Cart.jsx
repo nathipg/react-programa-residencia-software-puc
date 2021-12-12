@@ -1,8 +1,11 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
 
 import OrderItems from '../components/OrderItems';
 import CartSummary from '../components/CartSummary';
 import SectionWrapper from '../components/SectionWrapper';
+
+import CartContext from '../store/contexts/cart';
 
 const StyledCart = styled.div`
   display: flex;
@@ -14,18 +17,19 @@ const StyledCart = styled.div`
   }
 `;
 
-const Cart = ({ cart, changeQtyHandler, addOrderHandler }) => {
+const Cart = ({ addOrderHandler }) => {
+  const cartCtx = useContext(CartContext);
+
   return (
     <SectionWrapper>
       <StyledCart>
-        {cart.items.length === 0 && <span>Your cart is empty</span>}
-        {cart.items.length > 0 && (
+        {cartCtx.cart.items.length === 0 && <span>Your cart is empty</span>}
+        {cartCtx.cart.items.length > 0 && (
           <>
             <OrderItems 
-              items={cart.items} 
-              edit={true} 
-              changeQtyHandler={changeQtyHandler} />
-            <CartSummary cart={cart} addOrderHandler={addOrderHandler} />
+              items={cartCtx.cart.items} 
+              edit={true} />
+            <CartSummary cart={cartCtx.cart} />
           </>
         )}
       </StyledCart>

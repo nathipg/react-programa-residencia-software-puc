@@ -1,7 +1,10 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
 
 import Input from './Input';
 import Picture from './Picture';
+
+import CartContext from '../store/contexts/cart';
 
 const Item = styled.tr`
   td {
@@ -11,7 +14,9 @@ const Item = styled.tr`
   }
 `;
 
-const OrderItem = ({ item, edit, changeQtyHandler }) => {
+const OrderItem = ({ item, edit }) => {
+  const cartCtx = useContext(CartContext);
+
   return (
     <Item>
       <td>
@@ -26,7 +31,7 @@ const OrderItem = ({ item, edit, changeQtyHandler }) => {
             type="number"
             value={item.orderItem.qty}
             size="sm"
-            onChange={event => changeQtyHandler(event, item)} />
+            onChange={event => cartCtx.changeQtyHandler(event, item)} />
         }
         {!edit && item.orderItem.qty}
       </td>

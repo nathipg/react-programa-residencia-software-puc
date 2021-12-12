@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useContext, useReducer } from 'react';
 import styled from 'styled-components';
 
 import Box from '../components/Box';
@@ -6,7 +6,9 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import InputsWrapper from '../components/InputsWrapper';
 
-import { userFormReducer, userFormReducerActions } from '../reducers/user';
+import { userFormReducer, userFormReducerActions } from '../store/reducers/user';
+
+import UserContext from '../store/contexts/user';
 
 const StyledCreateAccount = styled.div`
   display: flex;
@@ -15,7 +17,9 @@ const StyledCreateAccount = styled.div`
   padding-top: var(--margin-top-section);
 `;
 
-const CreateAccount = ({ users, addUserHandler }) => {
+const CreateAccount = () => {
+  const userCtx = useContext(UserContext);
+
   const formInitialState = {
     isValid: false,
     fields: {
@@ -98,7 +102,7 @@ const CreateAccount = ({ users, addUserHandler }) => {
     dispatch({
       type: userFormReducerActions.BLUR_INPUT,
       field: event.target.name,
-      payload: users,
+      payload: userCtx.users,
     });
   };
 
@@ -124,7 +128,7 @@ const CreateAccount = ({ users, addUserHandler }) => {
       user[key] = formState.fields[key].value;
     }
 
-    addUserHandler(user);
+    userCtx.addHandler(user);
   };
 
   return (

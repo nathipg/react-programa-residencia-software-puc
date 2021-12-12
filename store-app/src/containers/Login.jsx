@@ -7,9 +7,9 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import InputsWrapper from '../components/InputsWrapper';
 
-import { userLoginFormReducer, userLoginFormReducerActions } from '../reducers/user';
+import { userLoginFormReducer, userLoginFormReducerActions } from '../store/reducers/user';
 
-import AuthContext from '../store/auth-context';
+import AuthContext from '../store/contexts/auth';
 
 const StyledLogin = styled.div`
   display: flex;

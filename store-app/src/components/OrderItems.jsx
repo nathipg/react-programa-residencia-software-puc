@@ -29,7 +29,7 @@ const Table = styled.table`
   }
 `;
 
-const OrderItems = ({ items, edit, changeQtyHandler }) => {
+const OrderItems = ({ items, edit }) => {
   return (
     <TableWrapper>
       <Table>
@@ -47,8 +47,7 @@ const OrderItems = ({ items, edit, changeQtyHandler }) => {
             <OrderItem 
               key={item.id} 
               item={item} 
-              edit={edit}
-              changeQtyHandler={changeQtyHandler} />
+              edit={edit} />
           ))}
         </tbody>
       </Table>

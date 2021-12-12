@@ -7,7 +7,7 @@ import DropdownMenuOptions from './DropdownMenuOptions';
 import DropdownMenuTrigger from './DropdownMenuTrigger';
 import Logo from './Logo';
 import UserIcon from './UserIcon';
-import AuthContext from '../store/auth-context';
+import AuthContext from '../store/contexts/auth';
 
 const StyledHeader = styled.div`
   display: flex;

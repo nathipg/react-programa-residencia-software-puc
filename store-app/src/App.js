@@ -1,6 +1,5 @@
-import axios from 'axios';
-import { useCallback, useContext, useEffect, useReducer, useState } from 'react';
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 import Header from './components/Header';
 import Loading from './components/Loading';
@@ -14,189 +13,40 @@ import Orders from './containers/Orders';
 import ProductDetails from './containers/ProductDetails';
 import Products from './containers/Products';
 
-import { userReducer, userReducerActions } from './reducers/user';
-import { productReducer, productReducerActions } from './reducers/product';
-import { cartReducer, cartReducerActions } from './reducers/cart';
-import { orderReducer, orderReducerActions } from './reducers/order';
-
-import AuthContext from './store/auth-context';
+import AuthContext from './store/contexts/auth';
+import OrderContext from './store/contexts/order';
+import ProductContext from './store/contexts/product';
+import UserContext from './store/contexts/user';
 
 const App = () => {
-  const cartInitialState = {
-    total: 0,
-    items: [],
-  };
-  const [products, dispatchProducts] = useReducer(productReducer, []);
-  const [users, dispatchUsers] = useReducer(userReducer, []);
-  const [orders, dispatchOrders] = useReducer(orderReducer, []);
-  const [cart, dispatchCart] = useReducer(cartReducer, cartInitialState);
   const [loading, setLoading] = useState({
     complete: false,
     error: false,
   });
-  const navigate = useNavigate();
-  const ctx = useContext(AuthContext);
-  let loggedUserOrders = [];
 
-  if(ctx.isLoggedIn) {
-    loggedUserOrders = orders.filter(o => o.userId === ctx.loggedUser.id);
-  }
-
-  const addUserHandler = async user => {
-    const response = await axios.post('http://localhost:3001/user', user);
-    
-    if(response.status !== 200) {
-      // Tratar erro
-      return;
-    }
-
-    dispatchUsers({
-      type: userReducerActions.ADD,
-      user: response.data,
-    });
-
-    navigate('/login');
-  };
-
-  const addProductHandler = async product => {
-    const response = await axios.post('http://localhost:3001/product', product);
-    
-    if(response.status !== 200) {
-      // Tratar erro
-      return;
-    }
-
-    dispatchProducts({
-      type: productReducerActions.ADD,
-      product: response.data,
-    });
-
-    navigate('/');
-  };
-
-  const addCartItemHandler = product => {
-    dispatchCart({
-      type: cartReducerActions.ADD,
-      product,
-    });
-
-    navigate('/cart');
-  };
-
-  const changeQtyHandler = (event, product) => {
-    dispatchCart({
-      type: cartReducerActions.CHANGE_QTY,
-      product,
-      newValue: event.target.value,
-    });
-  };
-
-  const addOrderHandler = async (event, cart) => {
-    const response = await axios.post('http://localhost:3001/order', {
-      ...cart,
-      userId: ctx.loggedUser.id,
-    });
-    
-    if(response.status !== 200) {
-      // Tratar erro
-      return;
-    }
-
-    dispatchOrders({
-      type: orderReducerActions.ADD,
-      order: response.data,
-    });
-
-    dispatchCart({
-      type: cartReducerActions.RESET,
-      cart: cartInitialState,
-    });
-
-    navigate(`/order-details/${response.data.id}`);
-  };
-
-  const loadUsers = useCallback(async () => {
-    try {
-      const response = await axios.get('http://localhost:3001/user');
-
-      if(response.status !== 200) {
-        setLoading(prevState => ({
-          ...prevState,
-          error: true,
-        }));
-        return;
-      }
-
-      dispatchUsers({
-        type: userReducerActions.LOAD,
-        users: response.data,
-      });
-    } catch(error) {
-      setLoading(prevState => ({
-        ...prevState,
-        error: true,
-      }));
-    }
-  }, [dispatchUsers]);
-
-  const loadProducts = useCallback(async () => {
-    try {
-      const response = await axios.get('http://localhost:3001/product');
-
-      if(response.status !== 200) {
-        setLoading(prevState => ({
-          ...prevState,
-          error: true,
-        }));
-        return;
-      }
-
-      dispatchProducts({
-        type: productReducerActions.LOAD,
-        products: response.data,
-      });
-    } catch(error) {
-      setLoading(prevState => ({
-        ...prevState,
-        error: true,
-      }));
-    }
-  }, [dispatchProducts]);
-
-  const loadOrders = useCallback(async () => {
-    try {
-      const response = await axios.get('http://localhost:3001/order');
-
-      if(response.status !== 200) {
-        setLoading(prevState => ({
-          ...prevState,
-          error: true,
-        }));
-        return;
-      }
-
-      dispatchOrders({
-        type: orderReducerActions.LOAD,
-        orders: response.data,
-      });
-    } catch(error) {
-      setLoading(prevState => ({
-        ...prevState,
-        error: true,
-      }));
-    }
-  }, [dispatchOrders]);
+  const { isLoggedIn } = useContext(AuthContext);
+  const { loadOrders } = useContext(OrderContext);
+  const { loadProducts } = useContext(ProductContext);
+  const { loadUsers } = useContext(UserContext);
 
   useEffect(() => {
     (async () => {
-      await loadUsers();
-      await loadProducts();
-      await loadOrders();
+      try {
+        await loadUsers();
+        await loadProducts();
+        await loadOrders();
 
-      setLoading(prevState => ({
-        ...prevState,
-        complete: true,
-      }));
+        setLoading(prevState => ({
+          ...prevState,
+          complete: true,
+        }));
+      } catch(e) {
+        console.error(e);
+        setLoading(prevState => ({
+          ...prevState,
+          error: true,
+        }));
+      }
     })();
   }, [loadUsers, loadProducts, loadOrders]);
 
@@ -214,26 +64,26 @@ const App = () => {
 
       {loading.complete && !loading.error && (
         <Routes>
-          {!ctx.isLoggedIn && (
+          {!isLoggedIn && (
             <>
               <Route path="/login" element={<Login />} />
-              <Route path="/create-account" element={<CreateAccount users={users} addUserHandler={addUserHandler} />} />
+              <Route path="/create-account" element={<CreateAccount />} />
             </>
           )}
 
-          {ctx.isLoggedIn && (
+          {isLoggedIn && (
             <>
-              <Route path="/" exact element={<Products products={products} addCartItemHandler={addCartItemHandler} />} />
-              <Route path="/cart" element={<Cart cart={cart} changeQtyHandler={changeQtyHandler} addOrderHandler={addOrderHandler} />} />
-              <Route path="/all-orders" element={<Orders orders={orders} />} />
-              <Route path="/my-orders" element={<Orders orders={loggedUserOrders} />} />
-              <Route path="/order-details/:id" element={<OrderDetails orders={orders} />} />
-              <Route path="/product-details/:id" element={<ProductDetails products={products} addCartItemHandler={addCartItemHandler} />} />
-              <Route path="/add-product" element={<AddProduct addProductHandler={addProductHandler} />} />
+              <Route path="/" exact element={<Products />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/all-orders" element={<Orders />} />
+              <Route path="/my-orders" element={<Orders />} />
+              <Route path="/order-details/:id" element={<OrderDetails />} />
+              <Route path="/product-details/:id" element={<ProductDetails />} />
+              <Route path="/add-product" element={<AddProduct />} />
             </>
           )}
 
-          <Route path="*" element={<Navigate replace to={ctx.isLoggedIn ? '/' : '/login'} />} />
+          <Route path="*" element={<Navigate replace to={isLoggedIn ? '/' : '/login'} />} />
         </Routes>
       )}
     </>

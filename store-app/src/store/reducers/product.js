@@ -1,4 +1,4 @@
-import { changeInputHandler, blurInputHandler, focusInputHandler } from '../util/utility';
+import { changeInputHandler, blurInputHandler, focusInputHandler } from '../../util/utility';
 
 export const productFormReducer = (prevState, action) => {
   switch (action.type) {

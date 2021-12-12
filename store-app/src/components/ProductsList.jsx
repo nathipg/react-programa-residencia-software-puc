@@ -12,7 +12,7 @@ const ProductsList = ({ products, addCartItemHandler }) => {
       return <span>No products found</span>;
     }
 
-    return products.map(product => <Product key={product.id} product={product} addCartItemHandler={addCartItemHandler} />);
+    return products.map(product => <Product key={product.id} product={product} />);
   };
 
   return (

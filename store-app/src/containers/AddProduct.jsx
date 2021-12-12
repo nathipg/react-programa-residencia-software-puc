@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useContext, useReducer } from 'react';
 import styled from 'styled-components';
 
 import Button from '../components/Button';
@@ -6,14 +6,16 @@ import Input from '../components/Input';
 import InputsWrapper from '../components/InputsWrapper';
 import SectionWrapper from '../components/SectionWrapper';
 
-import { productFormReducer, productFormReducerActions } from '../reducers/product';
+import { productFormReducer, productFormReducerActions } from '../store/reducers/product';
+
+import ProductContext from '../store/contexts/product';
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-const AddProduct = ({ addProductHandler }) => {
+const AddProduct = () => {
   const formInitialState = {
     isValid: false,
     fields: {
@@ -73,6 +75,7 @@ const AddProduct = ({ addProductHandler }) => {
     },
   };
   const [formState, dispatch] = useReducer(productFormReducer, formInitialState);
+  const productCtx = useContext(ProductContext);
   const inputArray = [];
 
   for(const key in formState.fields) {
@@ -117,7 +120,7 @@ const AddProduct = ({ addProductHandler }) => {
       product[key] = formState.fields[key].value;
     }
 
-    addProductHandler(product);
+    productCtx.addHandler(product);
   };
 
   return (
