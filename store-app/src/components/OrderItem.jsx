@@ -7,10 +7,11 @@ const Item = styled.tr`
   td {
     padding: 1rem;
     text-align: center;
+    white-space: nowrap;
   }
 `;
 
-const OrdersItemsListItem = ({ item, edit }) => {
+const OrdersItemsListItem = ({ item, edit, changeQtyHandler }) => {
   return (
     <Item>
       <td>
@@ -25,12 +26,12 @@ const OrdersItemsListItem = ({ item, edit }) => {
             type="number"
             value={item.qty}
             size="sm"
-            onChange={() => {}} />
+            onChange={event => changeQtyHandler(event, item.product)} />
         }
         {!edit && item.qty}
       </td>
-      <td>$ {item.product.price}</td>
-      <td>$ {item.total}</td>
+      <td>$ {item.product.price.toFixed(2)}</td>
+      <td>$ {item.price.toFixed(2)}</td>
     </Item>
   );
 }

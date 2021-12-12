@@ -27,6 +27,15 @@ const Button = styled.button`
       background-color: var(--light-primary);
     }
   `}
+
+  ${({ disabled }) => disabled && css`
+    cursor: auto;
+    background-color: var(--light-primary);
+
+    &:hover {
+      background-color: var(--light-primary);
+    }
+  `}
 `;
 
 export default Button;

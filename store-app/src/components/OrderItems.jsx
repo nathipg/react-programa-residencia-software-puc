@@ -29,17 +29,7 @@ const Table = styled.table`
   }
 `;
 
-const OrderItems = ({ items, edit }) => {
-  const renderItems = () => {
-    if(items.length === 0) {
-      return <tr>
-        <td colSpan={5}>Your cart is empty</td>
-      </tr>;
-    }
-
-    return items.map(item => <OrderItem key={item.product.id} item={item} edit={edit} />)
-  };
-
+const OrderItems = ({ items, edit, changeQtyHandler }) => {
   return (
     <TableWrapper>
       <Table>
@@ -53,7 +43,13 @@ const OrderItems = ({ items, edit }) => {
           </tr>
         </thead>
         <tbody>
-          {renderItems()}
+          {items.map(item => (
+            <OrderItem 
+              key={item.product.id} 
+              item={item} 
+              edit={edit}
+              changeQtyHandler={changeQtyHandler} />
+          ))}
         </tbody>
       </Table>
     </TableWrapper>

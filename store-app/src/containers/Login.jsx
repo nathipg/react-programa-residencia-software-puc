@@ -21,8 +21,8 @@ const Login = () => {
       <Box title="Welcome to StoreApp">
         <InputsWrapper>
           <Input
-            label="User"
-            name="user"
+            label="Username"
+            name="username"
             type="text"
             value=""
             onChange={() => {}} />

@@ -48,7 +48,7 @@ const OrdersListItem = ({ order, showButton = true }) => {
           <span className="id">#{order.id}</span>
           <div>
             <span>Date: {order.date}</span>
-            <span>Total: $ {order.total}</span>
+            <span>Total: $ {order.total.toFixed(2)}</span>
           </div>
         </Details>
         {showButton && <Button variant="primary" onClick={() => navigate(`/order-details/${order.id}`)}>Details</Button>}

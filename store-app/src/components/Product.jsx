@@ -39,17 +39,23 @@ const Details = styled.div`
   }
 `;
 
-const Product = ({product}) => {
+const Product = ({ product, addCartItemHandler }) => {
   const navigate = useNavigate();
 
+  const clickWrapperHandler = event => {
+    if(event.target.tagName !== 'BUTTON') {
+      navigate(`/product-details/${product.id}`)
+    }
+  }
+
   return (
-    <Wrapper onClick={() => navigate(`/product-details/${product.id}`)}>
+    <Wrapper onClick={clickWrapperHandler}>
       <PictureWrapper>
         <Picture src={product.picture} width="stretch" />
       </PictureWrapper>
       <Details>
         <span>{product.name}</span>
-        <Button variant="primary" size="sm">Buy</Button>
+        <Button variant="primary" size="sm" onClick={() => addCartItemHandler(product)}>Buy</Button>
       </Details>
     </Wrapper>
   );

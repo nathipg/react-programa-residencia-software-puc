@@ -6,13 +6,13 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
 `;
 
-const ProductsList = ({products}) => {
+const ProductsList = ({ products, addCartItemHandler }) => {
   const renderProducts = () => {
     if(products.length === 0) {
       return <span>No products found</span>;
     }
 
-    return products.map(product => <Product key={product.id} product={product} />);
+    return products.map(product => <Product key={product.id} product={product} addCartItemHandler={addCartItemHandler} />);
   };
 
   return (

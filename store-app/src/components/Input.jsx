@@ -60,7 +60,7 @@ const StyledInput = styled.input`
     }
   `}
 
-  ${({ invalid, touched }) => invalid && touched && css`
+  ${({ valid, touched }) => !valid && touched && css`
     border-color: var(--error);
   `}
 `;
@@ -71,11 +71,26 @@ const InvalidMessage = styled.span`
 `;
 
 const Input = ({
-  as, label, type, name, value, onChange, invalid, invalidMessage, touched, size
+  as, label, type, name, value, onChange, onBlur, onFocus, valid, invalidMessage, touched, size
 }) => {
   const fieldId = `id_${name}`;
   const hasValue = !!value.length;
   const hasLabel = !!label;
+
+  valid = valid === undefined ? true : valid;
+
+  const input = <StyledInput
+    id={fieldId}
+    as={as}
+    type={type}
+    name={name}
+    value={value}
+    hasValue={hasValue}
+    onChange={onChange}
+    onBlur={onBlur}
+    onFocus={onFocus}
+    valid={valid}
+    size={size} />;
 
   return (
     <Wrapper size={size}>
@@ -83,39 +98,17 @@ const Input = ({
         hasLabel && (
           <Label
             htmlFor={fieldId}>
-            <StyledInput
-              id={fieldId}
-              as={as}
-              type={type}
-              name={name}
-              value={value}
-              hasValue={hasValue}
-              onChange={onChange}
-              invalid={invalid}
-              size={size} />
+            {input}
             <Label.Text>
               {label}
             </Label.Text>
           </Label>
         )
       }
-      {
-        !hasLabel && (
-          <StyledInput
-            id={fieldId}
-            as={as}
-            type={type}
-            name={name}
-            value={value}
-            hasValue={hasValue}
-            onChange={onChange}
-            invalid={invalid}
-            size={size} />
-        )
-      }
+      { !hasLabel && input }
       {
         touched &&
-        invalid && 
+        !valid && 
         invalidMessage &&
         <InvalidMessage>{invalidMessage}</InvalidMessage>
       }

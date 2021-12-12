@@ -36,7 +36,7 @@ const Details = styled.div`
   flex-direction: column;
 `;
 
-const ProductDetails = ({ products }) => {
+const ProductDetails = ({ products, addCartItemHandler }) => {
   const params = useParams();
   const productId = +params.id;
   const product = products.find(p => p.id === productId);
@@ -47,9 +47,11 @@ const ProductDetails = ({ products }) => {
         <Picture src={product.picture} />
         <Details>
           <Title>{product.name}</Title>
-          <span>$ {product.price}</span>
+          <span>$ {product.price.toFixed(2)}</span>
           <p>{product.description}</p>
-          <Button variant="primary">Buy</Button>
+          <Button 
+            variant="primary"
+            onClick={() => addCartItemHandler(product)}>Buy</Button>
         </Details>
       </Wrapper>
     </SectionWrapper>
