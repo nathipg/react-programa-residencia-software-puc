@@ -30,7 +30,7 @@ export const ProductContextProvider = ({ children }) => {
         product: response.data,
       });
 
-      navigate('/');
+      navigate(`/product-details/${response.data.id}`);
     } catch(e) {
       console.error(e);
       flashMsgCtx.showHandler('Error creating product');

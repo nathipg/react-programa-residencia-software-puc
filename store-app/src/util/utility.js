@@ -36,6 +36,9 @@ const updateFormFieldValue = (formState, field, changes) => {
 export const changeInputHandler = (prevState, action) => {
   const field = prevState.fields[action.field];
   let value = action.value;
+  const validations = field.validation;
+  let fieldOk = true;
+  let updatedState = prevState;
 
   if(field.accept && field.accept === 'currency') {
     value = value.replaceAll(',', '.');
@@ -47,7 +50,41 @@ export const changeInputHandler = (prevState, action) => {
     }
   }
 
-  return updateFormFieldValue(prevState, action.field, {
+  for(const validation of validations) {
+    const isValid = validate(value, validation.rule, action.payload);
+    if(!isValid) {
+      fieldOk = false;
+
+      updatedState = updateFormFieldValue(updatedState, action.field, {
+        valid: false,
+        errorMsg: validation.msg,
+      });
+
+      break;
+    }
+  }
+
+  if(fieldOk) {
+    updatedState = updateFormFieldValue(updatedState, action.field, {
+      valid: true,
+      errorMsg: '',
+    });
+  }
+
+  let formOk = true;
+  for(const key in updatedState.fields) {
+    if(!updatedState.fields[key].valid) {
+      formOk = false;
+      break;
+    }
+  }
+
+  updatedState = {
+    ...updatedState,
+    isValid: formOk,
+  };
+
+  return updateFormFieldValue(updatedState, action.field, {
     value,
   });
 };

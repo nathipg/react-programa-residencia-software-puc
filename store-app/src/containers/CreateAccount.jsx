@@ -95,6 +95,7 @@ const CreateAccount = () => {
       type: userFormReducerActions.USER_INPUT,
       field: event.target.name,
       value: event.target.value,
+      payload: userCtx.users,
     });
   };
 
@@ -102,7 +103,6 @@ const CreateAccount = () => {
     dispatch({
       type: userFormReducerActions.BLUR_INPUT,
       field: event.target.name,
-      payload: userCtx.users,
     });
   };
 
