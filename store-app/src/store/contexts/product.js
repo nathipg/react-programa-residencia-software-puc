@@ -1,8 +1,10 @@
 import axios from 'axios';
-import { createContext, useCallback, useReducer } from 'react';
+import { createContext, useCallback, useContext, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { productReducer, productReducerActions } from '../reducers/product';
+
+import FlashMsgContext from './flashMsg';
 
 const ProductContext = createContext({
   products: [],
@@ -12,22 +14,27 @@ const ProductContext = createContext({
 
 export const ProductContextProvider = ({ children }) => {
   const [products, dispatchProducts] = useReducer(productReducer, []);
+  const flashMsgCtx = useContext(FlashMsgContext);
   const navigate = useNavigate();
 
   const addHandler = async product => {
-    const response = await axios.post('http://localhost:3001/product', product);
-    
-    if(response.status !== 200) {
-      // Tratar erro
-      return;
+    try {
+      const response = await axios.post('http://localhost:3001/product', product);
+      
+      if(response.status !== 200) {
+        throw Error(response);
+      }
+
+      dispatchProducts({
+        type: productReducerActions.ADD,
+        product: response.data,
+      });
+
+      navigate('/');
+    } catch(e) {
+      console.error(e);
+      flashMsgCtx.showHandler('Error creating product');
     }
-
-    dispatchProducts({
-      type: productReducerActions.ADD,
-      product: response.data,
-    });
-
-    navigate('/');
   };
 
   const loadProducts = useCallback(async () => {

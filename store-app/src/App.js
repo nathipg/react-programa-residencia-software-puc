@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
+import FlashMsg from './components/FlashMsg';
 import Header from './components/Header';
 import Loading from './components/Loading';
 import SectionWrapper from './components/SectionWrapper';
@@ -14,6 +15,7 @@ import ProductDetails from './containers/ProductDetails';
 import Products from './containers/Products';
 
 import AuthContext from './store/contexts/auth';
+import FlashMsgContext from './store/contexts/flashMsg';
 import OrderContext from './store/contexts/order';
 import ProductContext from './store/contexts/product';
 import UserContext from './store/contexts/user';
@@ -24,6 +26,7 @@ const App = () => {
     error: false,
   });
 
+  const { flashMsg } = useContext(FlashMsgContext);
   const { isLoggedIn } = useContext(AuthContext);
   const { loadOrders } = useContext(OrderContext);
   const { loadProducts } = useContext(ProductContext);
@@ -44,6 +47,7 @@ const App = () => {
         console.error(e);
         setLoading(prevState => ({
           ...prevState,
+          complete: true,
           error: true,
         }));
       }
@@ -53,6 +57,8 @@ const App = () => {
   return (
     <>
       <Header />
+
+      {flashMsg.isVisible && <FlashMsg /> }
 
       {!loading.complete && <Loading /> }
 

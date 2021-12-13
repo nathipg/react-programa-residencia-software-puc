@@ -1,6 +1,8 @@
 import axios from 'axios';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import FlashMsgContext from './flashMsg';
 
 const AuthContext = createContext({
   isLoggedIn: false,
@@ -13,6 +15,7 @@ export const AuthContextProvider = ({ children }) => {
     const [loggedUser, setLoggedUser] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
+    const flashMsgCtx = useContext(FlashMsgContext);
 
     const logoutHandler = () => {
       setLoggedUser(null);
@@ -22,17 +25,21 @@ export const AuthContextProvider = ({ children }) => {
     };
 
     const loginHandler = async login => {
-      const response = await axios.post('http://localhost:3001/login', login);
+      try {
+        const response = await axios.post('http://localhost:3001/login', login);
 
-      if(response.status !== 200) {
-        // Tratar erro
-        return;
+        if(response.status !== 200) {
+          throw Error(response);
+        }
+    
+        setLoggedUser(response.data);
+        setIsLoggedIn(true);
+    
+        navigate('/');
+      } catch(e) {
+        console.error(e);
+        flashMsgCtx.showHandler('Invalid credentials');
       }
-  
-      setLoggedUser(response.data);
-      setIsLoggedIn(true);
-  
-      navigate('/');
     };
 
     useEffect(() => {
