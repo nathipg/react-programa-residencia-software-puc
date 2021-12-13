@@ -54,7 +54,7 @@ const ProductDetails = () => {
         <Picture src={product.picture} />
         <Details>
           <Title>{product.name}</Title>
-          <span>$ {product.price.toFixed(2)}</span>
+          <span>$ {Number(product.price).toFixed(2)}</span>
           <p>{product.description}</p>
           <Button 
             variant="primary"

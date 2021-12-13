@@ -46,7 +46,7 @@ const AddProduct = () => {
       },
       picture: {
         type: 'url',
-        label: 'Picture',
+        label: 'Picture URL',
         value: '',
         validation: [{
             rule: 'required',
@@ -124,7 +124,7 @@ const AddProduct = () => {
   };
 
   return (
-    <SectionWrapper>
+    <SectionWrapper title="Add Product">
       <form onSubmit={submitHandler}>
         <Wrapper>
           <InputsWrapper>

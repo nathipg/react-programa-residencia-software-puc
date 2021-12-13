@@ -35,8 +35,8 @@ const OrderItem = ({ item, edit }) => {
         }
         {!edit && item.orderItem.qty}
       </td>
-      <td>$ {item.price.toFixed(2)}</td>
-      <td>$ {item.orderItem.price.toFixed(2)}</td>
+      <td>$ {Number(item.price).toFixed(2)}</td>
+      <td>$ {Number(item.orderItem.price).toFixed(2)}</td>
     </Item>
   );
 }

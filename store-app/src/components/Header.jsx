@@ -46,6 +46,7 @@ const Header = () => {
               <UserIcon name={ctx.loggedUser.name} />
             </DropdownMenuTrigger>
             <DropdownMenu show={showMenu} closeHandler={toggleMenu}>
+              <DropdownMenuOptions to="/">Products</DropdownMenuOptions>
               <DropdownMenuOptions to="/cart">Cart</DropdownMenuOptions>
               <DropdownMenuOptions to="/my-orders">My Orders</DropdownMenuOptions>
               {ctx.loggedUser.admin === 1 && (

@@ -83,8 +83,8 @@ const changeQtyHandler = (prevState, action) => {
   const { newValue, product } = action;
   const itemIndex = prevState.items.findIndex(item => item.id === product.id);
   const item = prevState.items[itemIndex];
-  
-  if(newValue === '0') {
+
+  if(+newValue <= 0) {
     return changeItemQty(prevState, product, changeItemQtyActions.REMOVE);
   } else if(+newValue > item.orderItem.qty) {
     return changeItemQty(prevState, product, changeItemQtyActions.INCREASE);

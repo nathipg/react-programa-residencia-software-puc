@@ -21,7 +21,7 @@ const OrderDetails = () => {
   const order = orderCtx.orders.find(o => o.id === orderId);
 
   return (
-    <SectionWrapper>
+    <SectionWrapper title="Order Details">
       <Wrapper>
         <OrdersListItem order={order} showButton={false} />
         <OrderItems items={order.products} />

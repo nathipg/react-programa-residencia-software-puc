@@ -27,7 +27,7 @@ const App = () => {
   });
 
   const { flashMsg } = useContext(FlashMsgContext);
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, loggedUser } = useContext(AuthContext);
   const { loadOrders } = useContext(OrderContext);
   const { loadProducts } = useContext(ProductContext);
   const { loadUsers } = useContext(UserContext);
@@ -82,7 +82,7 @@ const App = () => {
               <Route path="/" exact element={<Products />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/all-orders" element={<Orders />} />
-              <Route path="/my-orders" element={<Orders />} />
+              <Route path="/my-orders" element={<Orders userId={loggedUser.id} />} />
               <Route path="/order-details/:id" element={<OrderDetails />} />
               <Route path="/product-details/:id" element={<ProductDetails />} />
               <Route path="/add-product" element={<AddProduct />} />

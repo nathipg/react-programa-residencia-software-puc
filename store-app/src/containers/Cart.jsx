@@ -17,11 +17,11 @@ const StyledCart = styled.div`
   }
 `;
 
-const Cart = ({ addOrderHandler }) => {
+const Cart = () => {
   const cartCtx = useContext(CartContext);
 
   return (
-    <SectionWrapper>
+    <SectionWrapper title="Cart">
       <StyledCart>
         {cartCtx.cart.items.length === 0 && <span>Your cart is empty</span>}
         {cartCtx.cart.items.length > 0 && (

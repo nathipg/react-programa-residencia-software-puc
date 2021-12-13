@@ -21,7 +21,7 @@ const Products = () => {
   }
 
   return (
-    <SectionWrapper>
+    <SectionWrapper title="Products">
       <InputsWrapper>
         <Input
           label="Search products..."

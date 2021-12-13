@@ -47,7 +47,7 @@ const CartSummary = ({ cart }) => {
         <DetailsWrapper>
           <Details>
             <span className="text">Total</span>
-            <span className="value">$ {cart.total.toFixed(2)}</span>
+            <span className="value">$ {Number(cart.total).toFixed(2)}</span>
           </Details>
           <Button 
             variant="primary"
