@@ -17,7 +17,7 @@ import './index.css';
 ReactDOM.render(
   <BrowserRouter>
     <ComposeContext contextProviders={[
-      FlashMsgContextProvider, AuthContextProvider, CartContextProvider, OrderContextProvider, ProductContextProvider, UserContextProvider,
+      FlashMsgContextProvider, CartContextProvider, AuthContextProvider, OrderContextProvider, ProductContextProvider, UserContextProvider,
     ]}>
       <App />
     </ComposeContext>

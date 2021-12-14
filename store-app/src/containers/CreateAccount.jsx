@@ -103,6 +103,7 @@ const CreateAccount = () => {
     dispatch({
       type: userFormReducerActions.BLUR_INPUT,
       field: event.target.name,
+      payload: userCtx.users,
     });
   };
 

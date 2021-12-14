@@ -2,6 +2,7 @@ import axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import CartContext from './cart';
 import FlashMsgContext from './flashMsg';
 
 const AuthContext = createContext({
@@ -16,11 +17,13 @@ export const AuthContextProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
     const flashMsgCtx = useContext(FlashMsgContext);
+    const cartCtx = useContext(CartContext);
 
     const logoutHandler = () => {
       setLoggedUser(null);
       setIsLoggedIn(false);
       localStorage.removeItem('loggedToken');
+      cartCtx.resetHandler();
       navigate('/login');
     };
 
