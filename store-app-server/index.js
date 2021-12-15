@@ -11,25 +11,25 @@ Order.belongsTo(User);
 User.hasMany(Order);
 Order.belongsToMany(Product, { through: OrderItem });
 
-sequelize.sync().then(() => console.log('db created')); // {force: true}
-
-(async () => {
-  const adminUser = await User.findOne({
-    where: {
-      username: 'admin',
-    },
-  });
-  
-  if(!adminUser) {
-    await User.create({
-      name: 'Admin',
-      email: 'admin@admin.com',
-      username: 'admin',
-      password: 'pwd',
-      admin: 1,
+sequelize.sync().then(() => { // {force: true}
+  (async () => {
+    const adminUser = await User.findOne({
+      where: {
+        username: 'admin',
+      },
     });
-  }
-})();
+    
+    if(!adminUser) {
+      await User.create({
+        name: 'Admin',
+        email: 'admin@admin.com',
+        username: 'admin',
+        password: 'pwd',
+        admin: 1,
+      });
+    }
+  })();
+});
 
 const app = express();
 

@@ -37,6 +37,7 @@ export const AuthContextProvider = ({ children }) => {
     
         setLoggedUser(response.data);
         setIsLoggedIn(true);
+        flashMsgCtx.hideHandler();
     
         navigate('/');
       } catch(e) {
