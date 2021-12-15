@@ -28,11 +28,11 @@ export const CartContextProvider = ({ children }) => {
     navigate('/cart');
   };
 
-  const changeQtyHandler = (event, product) => {
+  const changeQtyHandler = (newValue, product) => {
     dispatchCart({
       type: cartReducerActions.CHANGE_QTY,
       product,
-      newValue: event.target.value,
+      newValue,
     });
   };
 

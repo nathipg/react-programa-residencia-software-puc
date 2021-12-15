@@ -6,7 +6,7 @@ const Button = styled.button`
   margin: 0.5rem 0;
   text-transform: uppercase;
   white-space: nowrap;
-  padding: ${({ size }) => size === 'sm' ? '' : '1rem 2rem'};
+  padding: ${({ size }) => size === 'sm' ? '0.25rem 0.5rem' : '1rem 2rem'};
 
   ${({ variant }) => variant === 'primary' && css`
     background-color: var(--primary);

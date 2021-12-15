@@ -1,17 +1,19 @@
 const changeItemQty = (cartState, data) => {
   const { newValue, product } = data;
   const itemIndex = cartState.items.findIndex(item => item.id === product.id);
+  const newQty = +`${newValue}`.replace(/[^0-9]+/, '');
+
   const updatedItem = {
     ...product,
     orderItem: {
-      qty: newValue,
-      price: product.price * newValue,
+      qty: newQty,
+      price: product.price * newQty,
     },
   };
 
   let updatedItems = cartState.items.filter((item, i) => i !== itemIndex);
 
-  if(+newValue > 0) {
+  if(newQty > 0) {
     let secondHalf = [];
     
     if(itemIndex !== -1 && updatedItems.length > itemIndex) {
@@ -35,9 +37,16 @@ const changeItemQty = (cartState, data) => {
 };
 
 const addHandler = (prevState, action) => {
+  const item = prevState.items.find(item => item.id === action.product.id);
+  let newValue = 1;
+
+  if(item) {
+    newValue = item.orderItem.qty + 1;
+  }
+
   return changeItemQty(prevState, {
     ...action,
-    newValue: 1
+    newValue,
   });
 };
 

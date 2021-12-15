@@ -28,10 +28,10 @@ const OrderItem = ({ item, edit }) => {
           edit && 
           <Input
             name="qty"
-            type="number"
+            type="text"
             value={item.orderItem.qty}
             size="sm"
-            onChange={event => cartCtx.changeQtyHandler(event, item)} />
+            onChange={event => cartCtx.changeQtyHandler(event.target.value, item)} />
         }
         {!edit && item.orderItem.qty}
       </td>
