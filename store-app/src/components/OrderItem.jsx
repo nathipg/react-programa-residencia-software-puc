@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
 
-import Input from './Input';
 import Picture from './Picture';
 
 import CartContext from '../store/contexts/cart';
+import InputStep from './InputStep';
 
 const Item = styled.tr`
   td {
@@ -26,12 +26,10 @@ const OrderItem = ({ item, edit }) => {
       <td>
         {
           edit && 
-          <Input
+          <InputStep
             name="qty"
-            type="text"
             value={item.orderItem.qty}
-            size="sm"
-            onChange={event => cartCtx.changeQtyHandler(event.target.value, item)} />
+            changeHandler={value => cartCtx.changeQtyHandler(value, item)} />
         }
         {!edit && item.orderItem.qty}
       </td>

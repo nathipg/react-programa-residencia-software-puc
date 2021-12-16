@@ -5,7 +5,7 @@ const Wrapper = styled.div`
 
   ${({ size }) => size === 'sm' && css`
     width: fit-content;
-    margin: 0 auto;
+    margin: 0 0.5rem;
   `}
 
   textarea {

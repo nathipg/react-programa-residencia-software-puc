@@ -1,7 +1,7 @@
 const changeItemQty = (cartState, data) => {
   const { newValue, product } = data;
   const itemIndex = cartState.items.findIndex(item => item.id === product.id);
-  const newQty = +`${newValue}`.replace(/[^0-9]+/, '');
+  const newQty = +newValue > 100 ? 100 : +newValue;
 
   const updatedItem = {
     ...product,
