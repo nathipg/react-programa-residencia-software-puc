@@ -1,14 +1,11 @@
-import { Navbar, NavbarBrand } from 'react-bootstrap'
-import { Container } from '../../containers'
+import { Navbar, NavbarBrand } from 'react-bootstrap';
 
-export const Footer = () =>  {
+export const Footer = () => {
   return (
     <footer className="fixed-bottom">
       <Navbar bg="light" expand="lg">
-        <Container>
-          <NavbarBrand>React Course - Typescript PUC</NavbarBrand>
-        </Container>
+        <NavbarBrand>React Course - Typescript PUC</NavbarBrand>
       </Navbar>
     </footer>
-  )
-}
+  );
+};
