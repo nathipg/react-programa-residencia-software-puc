@@ -8,7 +8,7 @@ Alunos.init({
         type: DataTypes.STRING
     },
     idade: {
-        type: DataTypes.STRING
+        type: DataTypes.INTEGER
     },
     email: {
         type: DataTypes.STRING
