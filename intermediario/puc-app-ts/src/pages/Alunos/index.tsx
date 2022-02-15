@@ -10,19 +10,11 @@ import { Aluno } from '../../types/aluno';
 import { usePost } from '../../hooks/customHooks';
 
 export const Alunos = () => {
-  const [alunos, setAlunos] = useState<Aluno[]>([
-    {
-      id: 'IDUNICO',
-      nome: 'Pissuti',
-      idade: 24,
-      email: 'email@email.com',
-      telefone: '123123123',
-    },
-  ]);
+  const [alunos, setAlunos] = useState<Aluno[]>([]);
 
-  const apiPost = usePost<aluno>();
+  const { apiPost } = usePost('/alunos');
 
-  const cadastrarAluno = (aluno: Aluno) => {
+  const cadastrarAluno = async (aluno: Aluno) => {
     console.log('Cadastrar Aluno');
     await apiPost(aluno);
     setAlunos([...alunos, aluno]);
