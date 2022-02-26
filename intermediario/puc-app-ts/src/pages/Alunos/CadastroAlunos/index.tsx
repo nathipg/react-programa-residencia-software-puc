@@ -4,8 +4,8 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 import { Aluno } from '../../../types/aluno';
 
 const emailReducer = (
-  state: { value: string; isValid: boolean; },
-  action: { type: string; value: string; }
+  state: { value: string; isValid: boolean },
+  action: { type: string; value: string }
 ) => {
   if (action.type === 'USER_INPUT') {
     return {
@@ -28,8 +28,8 @@ const emailReducer = (
 };
 
 const telefoneReducer = (
-  state: { value: string; isValid: boolean; },
-  action: { type: string; value: string; }
+  state: { value: string; isValid: boolean },
+  action: { type: string; value: string }
 ) => {
   if (action.type === 'USER_INPUT') {
     return {
@@ -39,7 +39,7 @@ const telefoneReducer = (
   } else if (action.type === 'INPUT_BLUR') {
     return {
       ...state,
-      isValid: action.value.trim().length > 8,
+      isValid: state.value.trim().length > 8,
     };
   } else if (action.type === 'FORM_CLEANUP') {
     return {
@@ -129,6 +129,8 @@ export const CadastroAlunos = ({ onCadastroAluno }: AlunoProps) => {
               <Form.Control
                 required
                 name="nome"
+                type="text"
+                placeholder="Nome"
                 value={nome}
                 onChange={nomeChangeHandler}
               />
@@ -142,6 +144,8 @@ export const CadastroAlunos = ({ onCadastroAluno }: AlunoProps) => {
               <Form.Control
                 required
                 name="telefone"
+                type="text"
+                placeholder="Telefone"
                 value={telefoneState.value}
                 onChange={telefoneChangeHandler}
                 isValid={telefoneState.isValid}
@@ -155,6 +159,8 @@ export const CadastroAlunos = ({ onCadastroAluno }: AlunoProps) => {
               <Form.Control
                 required
                 name="idade"
+                type="number"
+                placeholder="Idade"
                 value={idade}
                 onChange={idadeChangeHandler}
               />
@@ -168,6 +174,8 @@ export const CadastroAlunos = ({ onCadastroAluno }: AlunoProps) => {
               <Form.Control
                 required
                 name="email"
+                type="text"
+                placeholder="Email"
                 value={emailState.value}
                 isValid={emailState.isValid}
                 onChange={emailChangeHandler}
@@ -178,7 +186,7 @@ export const CadastroAlunos = ({ onCadastroAluno }: AlunoProps) => {
         </Row>
         <Row>
           <Col>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" disabled={!emailState.isValid || !telefoneState.isValid}>
               Cadastrar
             </Button>
           </Col>
