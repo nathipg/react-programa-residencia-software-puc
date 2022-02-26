@@ -3,7 +3,7 @@ const sequelize = require('./database');
 const cors = require('cors');
 const Aluno = require('./Aluno');
 
-sequelize.sync({force: true}).then(() => console.log('db criado'));
+sequelize.sync(/*{force: true}*/).then(() => console.log('db criado'));
 const app = express();
 
 

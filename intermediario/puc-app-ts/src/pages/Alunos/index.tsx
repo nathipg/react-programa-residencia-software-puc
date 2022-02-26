@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Container } from '../../containers';
 
@@ -7,12 +7,19 @@ import ListagemAlunos from './ListagemAlunos';
 
 import { Aluno } from '../../types/aluno';
 
-import { usePost } from '../../hooks/customHooks';
+import { useGet, usePost } from '../../hooks/customHooks';
 
-export const Alunos = () => {
+const Alunos = () => {
   const [alunos, setAlunos] = useState<Aluno[]>([]);
 
   const { apiPost } = usePost('/alunos');
+  const { response, error, loading } = useGet<Aluno[]>('/alunos');
+
+  useEffect(() => {
+    if (response) {
+      setAlunos(response.data);
+    }
+  }, [response]);
 
   const cadastrarAluno = async (aluno: Aluno) => {
     console.log('Cadastrar Aluno');
@@ -29,3 +36,5 @@ export const Alunos = () => {
     </Container>
   );
 };
+
+export default Alunos;

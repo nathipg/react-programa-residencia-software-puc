@@ -1,12 +1,18 @@
-import { Button } from 'react-bootstrap'
+import { Button } from 'react-bootstrap';
 
-import { Container } from '../../containers'
+import { Container } from '../../containers';
 
-export const Home = () => {
+import { useTranslation } from 'react-i18next';
+
+const Home = () => {
+  const { t } = useTranslation();
+
   return (
     <Container>
-      <h1>Bem vindo a aplicação de Cadastro de Alunos</h1>
-      <Button>Login</Button>
+      <h1>{t('Bem vindo a aplicação de Cadastro de Alunos')}</h1>
+      <Button>{t('Login')}</Button>
     </Container>
-  )
-}
+  );
+};
+
+export default Home;
