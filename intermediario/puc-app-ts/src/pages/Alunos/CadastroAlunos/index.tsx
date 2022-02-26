@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useReducer, useState } from 'react';
+import { ChangeEvent, FormEvent, useReducer, useRef, useState } from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 
 import { Aluno } from '../../../types/aluno';
@@ -71,8 +71,12 @@ export const CadastroAlunos = ({ onCadastroAluno }: AlunoProps) => {
     isValid: false,
   });
 
+  // Reference
+  const nomeInput = useRef<HTMLInputElement>(null);
+
   const nomeChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setNome(event.target.value);
+    console.log(nomeInput.current!.value);
   };
 
   const idadeChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -133,6 +137,7 @@ export const CadastroAlunos = ({ onCadastroAluno }: AlunoProps) => {
                 placeholder="Nome"
                 value={nome}
                 onChange={nomeChangeHandler}
+                ref={nomeInput}
               />
             </Form.Group>
           </Col>
