@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useQuery, useMutation } from '@apollo/client';
 
 import { Container } from '../../containers';
 
@@ -7,24 +8,45 @@ import ListagemAlunos from './ListagemAlunos';
 
 import { Aluno } from '../../types/aluno';
 
-import { useGet, usePost } from '../../hooks/customHooks';
+import { LOAD_ALUNOS } from '../../graphql/Queries';
+import { CREATE_ALUNO_MUTATION } from '../../graphql/Mutations';
 
 const Alunos = () => {
   const [alunos, setAlunos] = useState<Aluno[]>([]);
 
-  const { apiPost } = usePost('/alunos');
-  const { response, error, loading } = useGet<Aluno[]>('/alunos');
+  const { data, loading, error } = useQuery(LOAD_ALUNOS);
+  const [createAluno, { error: errorMutation }] = useMutation(
+    CREATE_ALUNO_MUTATION
+  );
 
   useEffect(() => {
-    if (response) {
-      setAlunos(response.data);
+    if (data) {
+      setAlunos(data.getAllAlunos);
     }
-  }, [response]);
+  }, [data]);
 
   const cadastrarAluno = async (aluno: Aluno) => {
-    console.log('Cadastrar Aluno');
-    await apiPost(aluno);
-    setAlunos([...alunos, aluno]);
+    const response = await createAluno({
+      variables: {
+        nome: aluno.nome,
+        idade: aluno.idade,
+        telefone: +aluno.telefone,
+        email: aluno.email,
+      },
+    });
+
+    if (errorMutation) {
+      console.error(errorMutation);
+      return;
+    }
+
+    setAlunos([
+      ...alunos,
+      {
+        id: response.data.createAluno.id,
+        ...aluno,
+      },
+    ]);
   };
 
   return (
